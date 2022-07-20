@@ -5,29 +5,29 @@
 
 char	*get_next_line(int fd)
 {
-	size_t	i;
-	size_t	file_size;
 	char	*buf;
-	//static char	*line_start;
+	char	*tempbuf;
+	int i;
 
-	file_size = get_file_size(fd);
-	if (file_size == 0)
-		return (NULL);
 	buf = malloc(BUFFER_SIZE);
-	if (buf == NULL)
-		return (NULL);
-	// if buffer size is less than the line length NULL will be returned
-    while (i < BUFFER_SIZE)
+	tempbuf = malloc(1);
+	if (buf == NULL || tempbuf == NULL)
+		return (0);
+    i = 0;
+	while (read(fd, tempbuf, 1) > 0 && tempbuf[0] != '\n')
 	{
-		read(fd, buf, 1);
-		printf("%s", buf);
-		i++;
+		
+		if (i >= BUFFER_SIZE)
+			return (NULL);
+		buf[i++] = tempbuf[0];
 	}
-	printf("\n");
+	if (tempbuf[0] == 0)
+		return (NULL);
+	buf[i] = 0;
+	free(tempbuf);
 	return (buf);
 }
-
-
+/* TEST
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -39,8 +39,17 @@ int main(void)
 	file = open("test.txt",
 	O_RDONLY, S_IRWXU | S_IRWXO | S_IRWXG);
 	char *s = get_next_line(file);
-	// printf("output: %s\n", s);
+	printf("output: %s\n", s);
+	s = get_next_line(file);
+	printf("output: %s\n", s);
+	s = get_next_line(file);
+	printf("output: %s\n", s);
+	s = get_next_line(file);
+	printf("output: %s\n", s);
+	s = get_next_line(file);
+	printf("output: %s\n", s);
 	free(s);
 	close(file);
     return (0);
 }
+*/

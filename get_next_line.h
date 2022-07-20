@@ -4,6 +4,6 @@
 #include <stdio.h>
 
 char	*get_next_line(int fd);
-size_t	get_file_size(int fd);
+int	valid_ascii(int c);
 
 #endif
