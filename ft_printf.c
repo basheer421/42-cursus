@@ -6,19 +6,19 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 19:56:33 by bammar            #+#    #+#             */
-/*   Updated: 2022/08/21 21:06:35 by bammar           ###   ########.fr       */
+/*   Updated: 2022/08/22 18:13:16 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	print_hexa(unsigned long n, int small)
+static int	print_hexa(unsigned long long n, int small)
 {
-	unsigned long	x;
-	char			final[100];
-	int				rem;
-	int				i;
-	int				j;
+	unsigned long long	x;
+	char				final[100];
+	int					rem;
+	int					i;
+	int					j;
 
 	x = n;
 	i = 0;
@@ -40,7 +40,7 @@ static int	print_hexa(unsigned long n, int small)
 	return ((int)ft_strlen(final));
 }
 
-static int	print_pointer(unsigned long p)
+static int	print_pointer(unsigned long long p)
 {
 	int	count;
 
@@ -81,7 +81,7 @@ static int	print_case(const char *format, va_list ap, int i)
 	else if (format[i + 1] == 'u')
 		return (ft_putunbr_fd(va_arg(ap, int), 1));
 	else if (format[i + 1] == 'p')
-		return (print_pointer(va_arg(ap, unsigned long)));
+		return (print_pointer(va_arg(ap, unsigned long long)));
 	else if (format[i + 1] == 'x')
 		return (print_hexa(va_arg(ap, unsigned int), 1));
 	else if (format[i + 1] == 'X')
