@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 19:56:33 by bammar            #+#    #+#             */
-/*   Updated: 2022/08/22 18:13:16 by bammar           ###   ########.fr       */
+/*   Updated: 2022/08/23 17:46:39 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	print_hexa(unsigned long long n, int small)
 		if (rem < 10)
 			final[i++] = rem + '0';
 		else
-			final[i++] = (rem + '0' + 7) + (small * ('a' - 'A'));
+			final[i++] = ('A' + rem - 10) + (small * ('a' - 'A'));
 		x = x / 16;
 	}
 	final[i] = 0;
