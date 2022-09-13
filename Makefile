@@ -1,24 +1,29 @@
-NAME = get_next_line
-CC = cc
+UNAME = $(shell uname -s)
+
+ifeq ($(UNAME), Linux)
+    VALGRIND = valgrind -q --leak-check=full
+endif
+
+FILES = get_next_line.c get_next_line_utils.c main.c
 CFLAGS = -Wall -Wextra -Werror
-BUFFER_SIZE ?= $(shell bash -c 'read -p "BUFFER_SIZE: " BUFFER_SIZE; echo $$BUFFER_SIZE')
+OUT = gnlTest
 
-all: $(NAME)
+all:
+	@cc $(CFLAGS) $(FILES) -o $(OUT) && $(VALGRIND) ./$(OUT)
 
-$(NAME): # 		Compile
-	$(CC) $(CFLAGS) -D BUFFER_SIZE=$(BUFFER_SIZE) $@*.c $@.h -o $@
+dockerb:
+	@docker build -qt val . > /dev/null
+	@docker run -dti --privileged --name basheer42 -v $(shell pwd):/project/ val > /dev/null
 
-clean: #		Removes all .o files
-	rm -f *.o
+dockere:
+	@docker exec basheer42 make
 
-fclean:	clean # Removes the exe file
-	rm $(NAME)
+dockerc_dng:
+	@docker rmi $(shell docker images -f "dangling=true" -q) > /dev/null 2>&1 || true
 
-re: #			Removes .a file and redo
-	fclean all
+dockerc: dockerc_dng
+	@docker rm -f basheer42 > /dev/null
 
-run: $(NAME)
-	./$(NAME)
+valgrind: dockerb dockere dockerc
 
-rerun:	fclean all
-	./$(NAME)
+.PHONY: all dockerb dockere dockerc valgrind

@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/14 18:43:52 by bammar            #+#    #+#             */
-/*   Updated: 2022/09/13 16:43:45 by bammar           ###   ########.fr       */
+/*   Created: 2022/08/24 16:36:52 by bammar            #+#    #+#             */
+/*   Updated: 2022/09/13 16:00:41 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "get_next_line.h"
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
+int	main(void)
+{
+	int		file;
+	char	*s;
 
-# define BUFFER_SIZE 10
-
-char	*get_next_line(int fd);
-char	*ft_strchr(const char *s, int c);
-char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-size_t	ft_strlen(const char *s);
-char	*empty_string(void);
-
-#endif
+	file = open("test.txt",
+			O_RDONLY,
+			S_IRWXU | S_IRWXO | S_IRWXG);
+	while ((s = get_next_line(file)))
+		puts(s);
+	free(s);
+	close(file);
+	return (0);
+}
