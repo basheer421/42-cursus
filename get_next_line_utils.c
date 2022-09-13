@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 15:44:09 by bammar            #+#    #+#             */
-/*   Updated: 2022/09/13 16:14:18 by bammar           ###   ########.fr       */
+/*   Updated: 2022/09/13 19:28:28 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,27 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strdup(char *s)
 {
-	size_t	i;
-	size_t	slen;
+	int		i;
+	char	*s2;
 
-	slen = 0;
-	while (s[slen] != 0)
-		slen++;
-	if (c == 0)
-		return (((char *)s) + slen);
+	if (!s)
+		return (NULL);
+	i = 0;
+	while (s[i] != '\0')
+		i++;
+	s2 = malloc((i + 1) * sizeof(char));
+	if (s2 == NULL)
+		return (NULL);
 	i = 0;
 	while (s[i] != 0)
 	{
-		if (s[i] == (char)c)
-			return ((((char *)s) + i));
+		s2[i] = s[i];
 		i++;
 	}
-	return (NULL);
+	s2[i] = 0;
+	return (s2);
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)

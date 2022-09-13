@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 14:50:24 by bammar            #+#    #+#             */
-/*   Updated: 2022/09/13 16:43:38 by bammar           ###   ########.fr       */
+/*   Updated: 2022/09/13 22:53:42 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,28 @@ char	*get_full(int fd, char *rest)
 {
 	char	*buf;
 	char	*full;
-	char	*temp;
 
 	buf = malloc(BUFFER_SIZE + 1);
 	if (!buf)
 		return (NULL);
-	full = rest;
+	full = NULL;
+	if (rest)
+	{
+		full = ft_strdup(rest);
+		rest = NULL;
+	}
 	while (read(fd, buf, BUFFER_SIZE) > 0)
 	{
-		temp = full;
-		if (full != NULL)
+		buf[BUFFER_SIZE] = 0;
+		printf("\nbuf: %s", buf);
+		if (full)
 			full = ft_strjoin(full, buf);
 		else
-			full = buf;
-		if (ft_strchr(full, '\n') != NULL)
+			full = ft_strdup(buf);
+		if (get_index_of('\n', buf) != -1)
 			break ;
 	}
-	// if (full[0] == 0)
-	// 	return (NULL);
+	rest = NULL;
 	return (full);
 }
 
@@ -70,16 +74,17 @@ char	*get_line(char *s)
 char	*get_rest(char *s)
 {
 	long long	new_line_i;
+	char		*str;
 
 	if (!s)
 		return (NULL);
 	new_line_i = get_index_of('\n', s);
 	if (new_line_i == -1)
 		return (NULL);
-	s += new_line_i + 1;
+	str = &(s[new_line_i + 1]);
 	if (*s == 0)
 		return (NULL);
-	return (s);
+	return (str);
 }
 
 char	*get_next_line(int fd)
