@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 14:50:24 by bammar            #+#    #+#             */
-/*   Updated: 2022/09/13 22:53:42 by bammar           ###   ########.fr       */
+/*   Updated: 2022/09/13 23:01:57 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,9 @@ static long long	get_index_of(int c, const char *str)
 
 char	*get_full(int fd, char *rest)
 {
-	char	*buf;
+	char	buf[BUFFER_SIZE + 1];
 	char	*full;
 
-	buf = malloc(BUFFER_SIZE + 1);
-	if (!buf)
-		return (NULL);
 	full = NULL;
 	if (rest)
 	{
@@ -43,7 +40,6 @@ char	*get_full(int fd, char *rest)
 	while (read(fd, buf, BUFFER_SIZE) > 0)
 	{
 		buf[BUFFER_SIZE] = 0;
-		printf("\nbuf: %s", buf);
 		if (full)
 			full = ft_strjoin(full, buf);
 		else
