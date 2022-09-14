@@ -30,6 +30,7 @@ char	*get_full(int fd, char *rest)
 {
 	char	buf[BUFFER_SIZE + 1];
 	char	*full;
+	ssize_t	read;
 
 	full = NULL;
 	if (rest)
@@ -37,15 +38,17 @@ char	*get_full(int fd, char *rest)
 		full = ft_strdup(rest);
 		rest = NULL;
 	}
-	while (read(fd, buf, BUFFER_SIZE) > 0)
+	read = read(fd, buf, BUFFER_SIZE);
+	while (read > 0)
 	{
-		buf[BUFFER_SIZE] = 0;
+		buf[read] = 0;
 		if (full)
 			full = ft_strjoin(full, buf);
 		else
 			full = ft_strdup(buf);
 		if (get_index_of('\n', buf) != -1)
 			break ;
+		read = read(fd, buf, BUFFER_SIZE);
 	}
 	rest = NULL;
 	return (full);
