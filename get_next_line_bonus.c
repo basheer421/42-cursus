@@ -6,11 +6,11 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 14:50:24 by bammar            #+#    #+#             */
-/*   Updated: 2022/09/15 19:30:10 by bammar           ###   ########.fr       */
+/*   Updated: 2022/09/15 20:04:44 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static long long	get_index_of(int c, const char *str)
 {
@@ -91,16 +91,21 @@ char	*get_next_line(int fd)
 {
 	char		*full;
 	char		*line;
-	static char	*rest;
+	size_t		i;
+	static char	*rest[1025];
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
 	line = NULL;
-	full = get_full(fd, rest);
-	if (rest)
-		free(rest);
+	i = 0;
+	if (rest[1024] != NULL)
+		while (i < 1025)
+			rest[i++] = NULL;
+	full = get_full(fd, rest[fd]);
+	if (rest[fd])
+		free(rest[fd]);
 	line = get_line(full);
-	rest = get_rest(full);
+	rest[fd] = get_rest(full);
 	if (line != full)
 		free(full);
 	if (!line)
