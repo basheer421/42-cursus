@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 16:36:52 by bammar            #+#    #+#             */
-/*   Updated: 2022/09/13 23:02:10 by bammar           ###   ########.fr       */
+/*   Updated: 2022/09/15 19:17:32 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,15 @@ int	main(void)
 	int		file;
 	char	*s;
 
-	file = open("test.txt",
-			O_RDONLY,
-			S_IRWXU | S_IRWXO | S_IRWXG);
+	file = open("nl",
+			O_RDONLY);
 	while ((s = get_next_line(file)))
-		printf("%s", s);
-	// s = get_next_line(file);
-	// printf("%s", s);
+	{
+		printf("%d\n", (unsigned int)s);
+		free(s);
+	}
+	s = get_next_line(file);
+	printf("%d\n", (unsigned int)s);
 	free(s);
 	close(file);
 	return (0);

@@ -9,7 +9,7 @@ CFLAGS = -Wall -Wextra -Werror
 OUT = gnlTest
 
 all:
-	@cc $(CFLAGS) $(FILES) -o $(OUT) && $(VALGRIND) ./$(OUT)
+	@cc -g $(CFLAGS) $(FILES) -o $(OUT) && $(VALGRIND) ./$(OUT)
 
 dockerb:
 	@docker build -qt val . > /dev/null
