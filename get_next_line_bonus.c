@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 14:50:24 by bammar            #+#    #+#             */
-/*   Updated: 2022/09/15 20:04:44 by bammar           ###   ########.fr       */
+/*   Updated: 2022/09/16 18:15:28 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,14 +92,14 @@ char	*get_next_line(int fd)
 	char		*full;
 	char		*line;
 	size_t		i;
-	static char	*rest[1025];
+	static char	*rest[10241];
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
 	line = NULL;
 	i = 0;
-	if (rest[1024] != NULL)
-		while (i < 1025)
+	if (rest[10240] != NULL)
+		while (i < 10241)
 			rest[i++] = NULL;
 	full = get_full(fd, rest[fd]);
 	if (rest[fd])
