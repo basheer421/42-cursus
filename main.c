@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 16:36:52 by bammar            #+#    #+#             */
-/*   Updated: 2022/09/15 19:17:32 by bammar           ###   ########.fr       */
+/*   Updated: 2022/09/16 18:24:41 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,18 @@ int	main(void)
 {
 	int		file;
 	char	*s;
-
-	file = open("nl",
+	size_t 	i;
+	file = open("en.daryabadi.txt",
 			O_RDONLY);
+	i = 0;
 	while ((s = get_next_line(file)))
 	{
-		printf("%d\n", (unsigned int)s);
+		printf("%s\n", s);
 		free(s);
+		i++;
 	}
-	s = get_next_line(file);
-	printf("%d\n", (unsigned int)s);
 	free(s);
+	printf("line count: %lu\n", i);
 	close(file);
 	return (0);
 }
