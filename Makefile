@@ -17,7 +17,7 @@ FILES = push_swap.c \
 		ps_radix.c	\
 		ps_retrun.c
 
-CC = clang
+CC = cc
 CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 OBJS = $(FILES:.c=.o)
 
