@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 21:52:44 by bammar            #+#    #+#             */
-/*   Updated: 2022/12/19 20:02:18 by bammar           ###   ########.fr       */
+/*   Updated: 2022/12/20 15:42:40 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,6 @@ int			change_path(t_dq *dq, int *item, int n);
 void		look_in_b(t_ps *ps, int path);
 void		save_in_bottom(t_ps *ps);
 void		push_back(t_ps *ps);
+void		small_sort(t_ps *ps, int size);
 
 #endif

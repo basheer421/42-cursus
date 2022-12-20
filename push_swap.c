@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 21:52:35 by bammar            #+#    #+#             */
-/*   Updated: 2022/12/19 19:59:02 by bammar           ###   ########.fr       */
+/*   Updated: 2022/12/20 15:40:49 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,57 +28,6 @@ int	is_sorted(t_dq *a)
 	return (1);
 }
 
-static void	push2b(t_ps *ps, int size)
-{
-	int	i;
-
-	i = size;
-	while (i-- > 3)
-	{
-		push_from(ps->a, ps->b);
-		ft_putstr_fd("pb\n", 1);
-	}
-}
-
-static void	repush2b(t_ps *ps)
-{
-	while (ps->b->head)
-	{
-		while (ps->a->head->content < ps->b->head->content
-			&& ps->b->head->content != ps->s->tail->content)
-		{
-			rotate(ps->a);
-			ft_putstr_fd("ra\n", 1);
-		}
-		push_from(ps->b, ps->a);
-		ft_putstr_fd("pa\n", 1);
-		while (!is_sorted(ps->a))
-		{
-			rotate(ps->a);
-			ft_putstr_fd("ra\n", 1);
-		}
-	}
-}
-
-void	small_sort(t_ps *ps, int size)
-{
-	push2b(ps, size);
-	while (!is_sorted(ps->a))
-	{
-		if (ps->a->head->content > ps->a->head->next->content)
-		{
-			rotate(ps->a);
-			ft_putstr_fd("ra\n", 1);
-		}
-		else
-		{
-			swap_top(ps->a);
-			ft_putstr_fd("sa\n", 1);
-		}
-	}
-	repush2b(ps);
-}
-
 int	main(int argc, char **argv)
 {
 	t_ps	*ps;
@@ -90,8 +39,8 @@ int	main(int argc, char **argv)
 		return (ft_putstr_fd("Error\nInvalid Arguments\n", 2), 1);
 	if (!is_sorted(ps->a))
 	{
-		if (argc - 1 <= 5)
-			small_sort(ps, argc - 1);
+		if (ft_dqsize(ps->a) <= 5)
+			small_sort(ps, ft_dqsize(ps->a));
 		else
 		{
 			radix(ps);
