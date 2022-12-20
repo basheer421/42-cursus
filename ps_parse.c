@@ -28,6 +28,7 @@ t_ps	*ps_new(void)
 	ps->s = ftdq_new();
 	if (!ps->s)
 		return (NULL);
+	ps->is_splited = 0;
 	return (ps);
 }
 
@@ -60,7 +61,8 @@ static int	*get_nums(int argc, char **argv)
 	{
 		num = ft_atol(argv[i]);
 		itoa_string = ft_itoa(num);
-		if ((ft_strncmp(itoa_string, argv[i], ft_strlen(argv[i])) != 0)
+		if ((ft_strncmp(itoa_string, argv[i] + (argv[i][0] == '+'),
+			ft_strlen(argv[i]) + (argv[i][0] == '+')) != 0)
 			|| ((num == 0) && (ft_strncmp(argv[i], "0", 1) != 0))
 			|| ((num == -1) && (ft_strncmp(argv[i], "-1", 2) != 0))
 			|| (num < INT_MIN) || (num > INT_MAX) || (is_in(num, nums, i)))
@@ -105,8 +107,7 @@ t_ps	*ps_init(int argc, char **argv)
 	if (argc == 2)
 	{
 		ps->argv = ft_split(argv[1], ' ');
-		if (sp_numcount(ps->argv) < 2)
-			return (sp_free(ps->argv), ps_destroy(ps), NULL);
+		ps->is_splited = 1;
 	}
 	count = sp_numcount(ps->argv);
 	nums = get_nums(count, ps->argv);

@@ -22,6 +22,7 @@ typedef struct s_ps
 	t_dq		*b;
 	t_dq		*s;
 	char		**argv;
+	int			is_splited;
 
 }			t_ps;
 

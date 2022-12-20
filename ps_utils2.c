@@ -31,6 +31,8 @@ int	get_index(int num, t_dlist *lst)
 
 void	ps_destroy(t_ps *ps)
 {
+	if (ps->is_splited)
+		sp_free(ps->argv);
 	ps_dqfree(ps->a);
 	ps_dqfree(ps->b);
 	ps_dqfree(ps->s);
