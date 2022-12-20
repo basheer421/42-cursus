@@ -49,6 +49,6 @@ int	main(int argc, char **argv)
 	}
 	if (argc == 2)
 		sp_free(ps->argv);
-	free(ps);
+	ps_destroy(ps);
 	return (0);
 }

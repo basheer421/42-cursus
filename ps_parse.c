@@ -106,12 +106,12 @@ t_ps	*ps_init(int argc, char **argv)
 	{
 		ps->argv = ft_split(argv[1], ' ');
 		if (sp_numcount(ps->argv) < 2)
-			return (sp_free(ps->argv), free(ps), NULL);
+			return (sp_free(ps->argv), ps_destroy(ps), NULL);
 	}
 	count = sp_numcount(ps->argv);
 	nums = get_nums(count, ps->argv);
 	if (nums == NULL)
-		return (NULL);
+		return (sp_free(ps->argv), ps_destroy(ps), NULL);
 	if (ps_dqfill(ps->a, nums, count) == -1)
 		return (free(nums), ps_destroy(ps), NULL);
 	tab_sort(nums, count);
