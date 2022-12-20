@@ -111,7 +111,7 @@ t_ps	*ps_init(int argc, char **argv)
 	count = sp_numcount(ps->argv);
 	nums = get_nums(count, ps->argv);
 	if (nums == NULL)
-		return (sp_free(ps->argv), ps_destroy(ps), NULL);
+		return (ps_destroy(ps), NULL);
 	if (ps_dqfill(ps->a, nums, count) == -1)
 		return (free(nums), ps_destroy(ps), NULL);
 	tab_sort(nums, count);
