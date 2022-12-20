@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:13:54 by bammar            #+#    #+#             */
-/*   Updated: 2022/12/20 15:50:38 by bammar           ###   ########.fr       */
+/*   Updated: 2022/12/20 21:19:20 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	*get_nums(int argc, char **argv)
 		num = ft_atol(argv[i]);
 		itoa_string = ft_itoa(num);
 		if ((ft_strncmp(itoa_string, argv[i] + (argv[i][0] == '+'),
-			ft_strlen(argv[i]) + (argv[i][0] == '+')) != 0)
+				ft_strlen(argv[i]) + (argv[i][0] == '+')) != 0)
 			|| ((num == 0) && (ft_strncmp(argv[i], "0", 1) != 0))
 			|| ((num == -1) && (ft_strncmp(argv[i], "-1", 2) != 0))
 			|| (num < INT_MIN) || (num > INT_MAX) || (is_in(num, nums, i)))
