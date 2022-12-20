@@ -19,7 +19,7 @@ FILES = push_swap.c \
 		ps_small_sort.c
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g
 OBJS = $(FILES:.c=.o)
 
 all: $(NAME)
