@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 21:52:35 by bammar            #+#    #+#             */
-/*   Updated: 2022/12/20 15:40:49 by bammar           ###   ########.fr       */
+/*   Updated: 2022/12/21 19:44:15 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int argc, char **argv)
 		return (0);
 	ps = ps_init(argc, argv);
 	if (!ps)
-		return (ft_putstr_fd("Error\nInvalid Arguments\n", 2), 1);
+		return (ft_putstr_fd("Error\n", 2), 1);
 	if (!is_sorted(ps->a))
 	{
 		if (ft_dqsize(ps->a) <= 5)

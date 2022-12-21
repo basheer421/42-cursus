@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 15:13:18 by bammar            #+#    #+#             */
-/*   Updated: 2022/12/20 15:40:30 by bammar           ###   ########.fr       */
+/*   Updated: 2022/12/21 19:58:21 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,18 @@ static void	push2b(t_ps *ps, int size)
 {
 	if (size < 4)
 		return ;
-	while (ps->a->head->content != ps->s->head->content)
+	while (ps->a->head->content != 0)
 		rotate_a(ps);
 	push_from(ps->a, ps->b);
 	ft_putstr_fd("pb\n", 1);
+	ft_dqdel_first(ps->s);
 	if (size == 5)
 	{
-		while (ps->a->head->content != ps->s->head->next->content)
+		while (ps->a->head->content != 1)
 			rotate_a(ps);
 		push_from(ps->a, ps->b);
 		ft_putstr_fd("pb\n", 1);
+		ft_dqdel_first(ps->s);
 	}
 }
 
