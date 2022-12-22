@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 21:52:44 by bammar            #+#    #+#             */
-/*   Updated: 2022/12/20 15:42:40 by bammar           ###   ########.fr       */
+/*   Updated: 2022/12/22 15:23:54 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 
 typedef struct s_ps
 {
-	t_dq		*a;
-	t_dq		*b;
-	t_dq		*s;
-	char		**argv;
-	int			is_splited;
+	t_dq	*a;
+	t_dq	*b;
+	t_dq	*s;
+	char	**argv;
+	int		is_splited;
 
 }			t_ps;
 
@@ -60,5 +60,9 @@ void		look_in_b(t_ps *ps, int path);
 void		save_in_bottom(t_ps *ps);
 void		push_back(t_ps *ps);
 void		small_sort(t_ps *ps, int size);
+int			is_sorted(t_dq *a);
+void		push2b(t_ps *ps, int size);
+void		repush2b(t_ps *ps, int size);
+void		sort3(t_ps *ps, int size);
 
 #endif

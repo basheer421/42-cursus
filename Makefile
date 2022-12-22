@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: bammar <bammar@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/12/22 15:27:14 by bammar            #+#    #+#              #
+#    Updated: 2022/12/22 15:27:15 by bammar           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = push_swap
 FILES = push_swap.c \
 		ft_deque/ft_dlstnew.c \
@@ -16,6 +28,7 @@ FILES = push_swap.c \
 		ps_parse.c \
 		ps_radix.c	\
 		ps_retrun.c \
+		ps_small_sort_utils.c \
 		ps_small_sort.c
 
 CC = cc
