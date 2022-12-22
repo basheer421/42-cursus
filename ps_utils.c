@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-static int	is_space(int c)
+int	is_space(int c)
 {
 	return (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'
 		|| c == '\r');

@@ -14,6 +14,11 @@
 
 void	small_sort(t_ps *ps, int size)
 {
+	if (size == 2)
+	{
+		rrotate(ps->a);
+		ft_putstr_fd("rra\n", 1);
+	}
 	push2b(ps, size);
 	if (!is_sorted(ps->a))
 		sort3(ps, size);

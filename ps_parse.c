@@ -51,7 +51,7 @@ static int	*get_nums(int argc, char **argv)
 	int		*nums;
 	long	num;
 	int		i;
-	char	*itoa_string;
+	
 
 	nums = malloc(sizeof(int) * (argc + 1));
 	if (!nums)
@@ -60,15 +60,10 @@ static int	*get_nums(int argc, char **argv)
 	while (i < argc)
 	{
 		num = ft_atol(argv[i]);
-		itoa_string = ft_itoa(num);
-		if ((ft_strncmp(itoa_string, argv[i] + (argv[i][0] == '+'),
-				ft_strlen(argv[i]) + (argv[i][0] == '+')) != 0)
-			|| ((num == 0) && (ft_strncmp(argv[i], "0", 1) != 0))
-			|| ((num == -1) && (ft_strncmp(argv[i], "-1", 2) != 0))
-			|| (num < INT_MIN) || (num > INT_MAX) || (is_in(num, nums, i)))
-			return (free(itoa_string), free(nums), NULL);
+		if (!is_valid_num(num, argv[i]) || (is_in(num, nums, i)))
+			return (free(nums), NULL);
 		nums[i++] = (int)num;
-		free(itoa_string);
+		
 	}
 	nums[i] = 0;
 	return (nums);
