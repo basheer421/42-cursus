@@ -59,6 +59,8 @@ static int	*get_nums(int argc, char **argv)
 	i = 0;
 	while (i < argc)
 	{
+		if (!argv || !argv[i])
+			return (free(nums), NULL);
 		num = ft_atol(argv[i]);
 		if (!is_valid_num(num, argv[i]) || (is_in(num, nums, i)))
 			return (free(nums), NULL);

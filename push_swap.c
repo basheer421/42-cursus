@@ -28,11 +28,25 @@ int	is_sorted(t_dq *a)
 	return (1);
 }
 
+int	is_empty(char **argv)
+{
+	int	i;
+
+	if (!argv[1] || !*argv[1])
+		return (1);
+	i = 0;
+	while (is_space(argv[1][i]))
+		i++;
+	if (!argv[1][i])
+		return (1);
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_ps	*ps;
 
-	if (argc == 1)
+	if (argc == 1 || (argc == 2 && is_empty(argv)))
 		return (0);
 	ps = ps_init(argc, argv);
 	if (!ps)
