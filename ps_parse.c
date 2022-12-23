@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 19:13:54 by bammar            #+#    #+#             */
-/*   Updated: 2022/12/20 21:19:20 by bammar           ###   ########.fr       */
+/*   Updated: 2022/12/23 17:49:41 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ static int	*get_nums(int argc, char **argv)
 	int		*nums;
 	long	num;
 	int		i;
-	
 
 	nums = malloc(sizeof(int) * (argc + 1));
 	if (!nums)
@@ -65,7 +64,6 @@ static int	*get_nums(int argc, char **argv)
 		if (!is_valid_num(num, argv[i]) || (is_in(num, nums, i)))
 			return (free(nums), NULL);
 		nums[i++] = (int)num;
-		
 	}
 	nums[i] = 0;
 	return (nums);

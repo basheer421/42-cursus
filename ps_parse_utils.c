@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 13:37:58 by bammar            #+#    #+#             */
-/*   Updated: 2022/12/19 18:15:15 by bammar           ###   ########.fr       */
+/*   Updated: 2022/12/23 17:49:32 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,13 @@ int	is_valid_num(long num, char *string)
 		return (0);
 	while (is_space(*string))
 		string++;
-	if ((!string) || (*string == '\0') || (ft_strncmp(itoa_string, string + (string[0] == '+'),
-				ft_strlen(string) + (string[0] == '+')) != 0)
-			|| ((num == 0) && (ft_strncmp(string, "0", 1) != 0))
-			|| ((num == -1) && (ft_strncmp(string, "-1", 2) != 0))
-			|| (num < INT_MIN) || (num > INT_MAX))
-			return (free(itoa_string), 0);
+	if ((!string) || (*string == '\0') || (ft_strncmp(itoa_string, string
+				+ (string[0] == '+'), ft_strlen(string)
+				+ (string[0] == '+')) != 0) || ((num == 0)
+			&& (ft_strncmp(string, "0", 1) != 0)) || ((num == -1)
+			&& (ft_strncmp(string, "-1", 2) != 0)) || (num < INT_MIN)
+		|| (num > INT_MAX))
+		return (free(itoa_string), 0);
 	free(itoa_string);
 	return (1);
 }
