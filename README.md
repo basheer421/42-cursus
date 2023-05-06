@@ -1,2 +1,2 @@
-# cpp-practice
+# Cpp-practice
 Some OOP concepts in cpp.
