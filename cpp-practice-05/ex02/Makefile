@@ -6,14 +6,14 @@
 #    By: bammar <bammar@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/30 14:09:40 by bammar            #+#    #+#              #
-#    Updated: 2023/05/30 16:45:28 by bammar           ###   ########.fr        #
+#    Updated: 2023/06/01 21:08:06 by bammar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	main
-
+#RobotomyRequestForm.cpp PresidentialPardonForm.cpp
 FILES	=	Bureaucrat.cpp AForm.cpp ShrubberyCreationForm.cpp\
-	RobotomyRequestForm.cpp PresidentialPardonForm.cpp main.cpp
+	 main.cpp
 
 CXX		=	c++
 
