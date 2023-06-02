@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 18:24:36 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/02 17:17:13 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/02 17:28:37 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 
 int main(void)
 {
-	Bureaucrat a("a", 130); // lazy
+	Bureaucrat a("A", 130); // lazy
 	std::cout << a;
-	Bureaucrat b("b", 3); // smart
+	Bureaucrat b("B", 3); // smart
 
 	
 	std::cout << "--------\n";
@@ -73,6 +73,15 @@ int main(void)
 
 	std::cout << "--------\n";
 	
+	a.executeForm(pForm);
+	b.executeForm(pForm);
+	std::cout << "--------\n";
+	a.executeForm(rForm);
+	b.executeForm(rForm);
+	std::cout << "--------\n";
+	a.executeForm(sForm);
+	b.executeForm(sForm);
+	std::cout << "--------\n";
 	a.signForm(pForm);
 	std::cout << (pForm.isSigned() ? "a is signed" : "a is not signed") << "\n";
 	std::cout << "--------\n";

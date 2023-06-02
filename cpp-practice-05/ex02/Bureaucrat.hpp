@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 18:24:34 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/01 20:54:46 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/02 17:19:26 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ class Bureaucrat
 			public:
 				const char *what() const throw();
 		};
+		void executeForm(AForm const & form);
 };
 
 #include "AForm.hpp"
