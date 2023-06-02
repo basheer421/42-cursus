@@ -38,8 +38,6 @@ AForm & AForm::operator=(const AForm& src) {
 	return (*this);
 }
 
-AForm::~AForm() {}
-
 const std::string AForm::getName() const {return name;}
 bool AForm::isSigned() const {return _isSigned;}
 int AForm::getGradeRequiredToSign() const {return gradeRequiredToSign;}
@@ -52,6 +50,12 @@ void AForm::beSigned(Bureaucrat& b)
 	this->_isSigned = true;
 }
 
+void AForm::throwIfNotExecuter(Bureaucrat const & b) const
+{
+	if (this->getGradeRequiredToExecute() < b.getGrade())
+		throw GradeTooLowException();
+}
+
 const char *AForm::GradeTooHighException::what() const throw()
 {
 	return ("The grade is too high");
@@ -61,6 +65,8 @@ const char *AForm::GradeTooLowException::what() const throw()
 {
 	return ("The grade is too low");	
 }
+
+AForm::~AForm() {}
 
 std::ostream &operator<<(std::ostream &out, const AForm &b)
 {

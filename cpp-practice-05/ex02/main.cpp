@@ -6,35 +6,76 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 18:24:36 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/01 21:16:34 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/02 17:17:13 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
 #include "AForm.hpp"
 #include "ShrubberyCreationForm.hpp"
+#include "RobotomyRequestForm.hpp"
+#include "PresidentialPardonForm.hpp"
 
 int main(void)
 {
-	Bureaucrat a("a", 90);
+	Bureaucrat a("a", 130); // lazy
 	std::cout << a;
-	Bureaucrat b("b", 30);
-	std::cout << "--------\n";
-	AForm jack = AForm("Jack", 50, 100);
-	ShrubberyCreationForm c("file1");
-	try {
-		jack.beSigned(a);
-	} catch (std::exception& e) {
-		std::cerr << e.what() << "\n";
-	}
-	std::cout << "--------\n";
-	try {
-		jack.beSigned(b);
-	} catch (std::exception& e) {
-		std::cerr << e.what() << "\n";
-	}
-	a.signForm(jack);
-	b.signForm(jack);
+	Bureaucrat b("b", 3); // smart
+
 	
+	std::cout << "--------\n";
+	PresidentialPardonForm pForm("pForm");
+	RobotomyRequestForm rForm("rForm");
+	ShrubberyCreationForm sForm("sForm");
+	
+	try {
+		pForm.execute(a);
+	} catch (std::exception& e) {
+		std::cerr << e.what() << "\n";
+		std::cerr << "line 35\n";
+	}
+	try {
+		pForm.execute(b);
+	} catch (std::exception& e) {
+		std::cerr << e.what() << "\n";
+		std::cerr << "line 41\n";
+	}
+
+	std::cout << "--------\n";
+
+	try {
+		sForm.execute(a);
+	} catch (std::exception& e) {
+		std::cerr << e.what() << "\n";
+		std::cerr << "line 50\n";
+	}
+	try {
+		sForm.execute(b);
+	} catch (std::exception& e) {
+		std::cerr << e.what() << "\n";
+		std::cerr << "line 56\n";
+	}
+
+	std::cout << "--------\n";
+
+	try {
+		rForm.execute(a);
+	} catch (std::exception& e) {
+		std::cerr << e.what() << "\n";
+		std::cerr << "line 65\n";
+	}
+	try {
+		rForm.execute(b);
+	} catch (std::exception& e) {
+		std::cerr << e.what() << "\n";
+		std::cerr << "line 71\n";
+	}
+
+	std::cout << "--------\n";
+	
+	a.signForm(pForm);
+	std::cout << (pForm.isSigned() ? "a is signed" : "a is not signed") << "\n";
+	std::cout << "--------\n";
+
 	return (0);
 }

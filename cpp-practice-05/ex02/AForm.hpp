@@ -20,6 +20,19 @@ class AForm {
 		bool _isSigned;
 		const int gradeRequiredToSign;
 		const int gradeRequiredToExecute;
+
+	protected:
+		class GradeTooHighException : public std::exception {
+			public:
+				const char *what() const throw();
+		};
+		class GradeTooLowException : public std::exception {
+			public:
+				const char *what() const throw();
+		};
+
+		void throwIfNotExecuter(Bureaucrat const & b) const;
+	
 	public:
 		AForm();
 		AForm(const std::string name, const int gradeRequiredToSign,
@@ -34,15 +47,10 @@ class AForm {
 		int getGradeRequiredToExecute() const;
 
 		void beSigned(Bureaucrat& b);
+		
+		virtual void execute(Bureaucrat const & executor) const = 0;
 
-		class GradeTooHighException : public std::exception {
-			public:
-				const char *what() const throw();
-		};
-		class GradeTooLowException : public std::exception {
-			public:
-				const char *what() const throw();
-		};
+		
 		
 };
 

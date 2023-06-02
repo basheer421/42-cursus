@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 16:57:58 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/01 21:17:31 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/02 16:27:19 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,17 @@ ShrubberyCreationForm & ShrubberyCreationForm::operator=
 	return (*this);
 }
 
-void ShrubberyCreationForm::write_tree()
+std::string ShrubberyCreationForm::getTarget() const
+{
+	return (target);
+}
+
+void ShrubberyCreationForm::setTarget(std::string src)
+{
+	this->target = src;
+}
+
+void ShrubberyCreationForm::write_tree() const
 {
 	try
 	{
@@ -53,19 +63,18 @@ void ShrubberyCreationForm::write_tree()
 		s << "   ........		\n";
 
 		file << s.str();
+		file.close();
 	} catch (std::exception& exception) {
 		std::cerr << exception.what() << "\n";
 	}
 }
 
-std::string ShrubberyCreationForm::getTarget() const
+void ShrubberyCreationForm::execute(Bureaucrat const & executor) const
 {
-	return (target);
-}
-
-void ShrubberyCreationForm::setTarget(std::string src)
-{
-	this->target = src;
+	throwIfNotExecuter(executor);
+	write_tree();
+	write_tree();
+	write_tree();
 }
 
 ShrubberyCreationForm::~ShrubberyCreationForm() {}

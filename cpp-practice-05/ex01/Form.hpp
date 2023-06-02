@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:10:51 by bammar            #+#    #+#             */
-/*   Updated: 2023/05/30 14:51:32 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/02 15:39:34 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,17 @@ class Form {
 		bool _isSigned;
 		const int gradeRequiredToSign;
 		const int gradeRequiredToExecute;
+
+	protected:
+		class GradeTooHighException : public std::exception {
+			public:
+				const char *what() const throw();
+		};
+		class GradeTooLowException : public std::exception {
+			public:
+				const char *what() const throw();
+		};
+
 	public:
 		Form();
 		Form(const std::string name, const int gradeRequiredToSign,
@@ -35,14 +46,7 @@ class Form {
 
 		void beSigned(Bureaucrat& b);
 
-		class GradeTooHighException : public std::exception {
-			public:
-				const char *what() const throw();
-		};
-		class GradeTooLowException : public std::exception {
-			public:
-				const char *what() const throw();
-		};
+
 		
 };
 
