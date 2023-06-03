@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 16:57:58 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/02 20:46:26 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/03 14:34:39 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void ShrubberyCreationForm::write_tree() const
 {
 	try
 	{
-		std::fstream file(std::string(this->target + "_shrubbery"),
+		std::fstream file(std::string(this->target + "_shrubbery").c_str(),
 			std::fstream::out);
 		std::stringstream s;
 
