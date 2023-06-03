@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 16:57:58 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/03 14:35:42 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/03 14:46:05 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ void ShrubberyCreationForm::write_tree() const
 void ShrubberyCreationForm::execute(Bureaucrat const & executor) const
 {
 	throwIfNotExecuter(executor);
-	write_tree();
-	write_tree();
 	write_tree();
 }
 
