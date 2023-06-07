@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 18:24:36 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/05 20:43:43 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/07 23:10:05 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,31 @@
 
 int main(void)
 {
-	std::string s("65");
-	ScalarSet set(ScalarConverter::convert(s));
+	std::string s("13.3954545454");
+	try
+	{
+		std::stringstream stream;
 
-	std::cout << set.Integer << "\n";
-	if (set.getCharacter() == -1)
-		std::cout << "impossible\n";
-	else if (!std::isprint(set.getCharacter()))
-		std::cout << "Non displayable\n";
-	else
-		std::cout << set.getCharacter() << "\n";
-	std::cout << set.Float << "\n";
-	std::cout << set.Double << "\n";
+		ScalarSet set(ScalarConverter::convert(s));
+		std::cout << set.Integer << "\n";
+		if (set.getCharacter() == -1)
+			std::cout << "impossible\n";
+		else if (!std::isprint(set.getCharacter()))
+			std::cout << "Non displayable\n";
+		else
+			std::cout << set.getCharacter() << "\n";
+
+		stream << set.Float;
+		std::cout << stream.str() << "f" << "\n";
+		stream.clear();
+		stream.seekg(0);
+		stream.seekp(0);
+		stream << set.Double;
+		std::cout << stream.str() << "\n";
+	
+	} catch (std::exception& e)
+	{
+		std::cerr << e.what() << "\n";
+	}
 	return (0);
 }

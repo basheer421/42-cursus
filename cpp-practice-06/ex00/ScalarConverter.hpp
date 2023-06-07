@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ScalarConverter.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 18:24:34 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/05 19:09:02 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/07 22:41:42 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,7 @@ class ScalarConverter
 		static void stripSpaces(std::string& s);
 
 	protected:
-		class NonDisplayableException : public std::exception {
-			public:
-				virtual const char *what() const throw();
-		};
-
-		class ImpossibleConversionException : public std::exception {
+		class InvalidTypeException : public std::exception {
 			public:
 				virtual const char *what() const throw();
 		};
