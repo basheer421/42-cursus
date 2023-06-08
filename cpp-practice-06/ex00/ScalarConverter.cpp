@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 18:24:31 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/07 23:00:27 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/08 18:11:07 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,22 @@ ScalarSet ScalarConverter::convert(std::string s)
 	ScalarSet			set;
 	t_type				type;
 
+	if (s == "nan" || s == "nanf" || s == "inf" || s == "-inf" || s == "inff" || s == "-inff")
+		return (ScalarSet(s));
+
 	type = ScalarConverter::getType(s);
 	if (type == NONE)
 		throw InvalidTypeException();
 	if (type == FLOAT)
 		s = s.substr(0, s.length() - 1);
 
+	if (type == CHAR)
+	{
+		set.Integer = (int)s[0];
+		set.Float = set.Integer;
+		set.Double = set.Integer;
+		return set;
+	}
 	stream << s;
 	stream >> set.Integer;
 
