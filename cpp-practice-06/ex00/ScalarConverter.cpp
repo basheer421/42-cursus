@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ScalarConverter.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
+/*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 18:24:31 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/08 18:11:07 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/09 16:39:41 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
+
+ScalarConverter::ScalarConverter() {}
+
+ScalarConverter& ScalarConverter::operator = (const ScalarConverter& src)
+{
+	(void)src;
+	return (*this);
+}
 
 const char *ScalarConverter::InvalidTypeException::what() const throw()
 {

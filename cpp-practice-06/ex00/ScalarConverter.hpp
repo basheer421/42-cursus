@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ScalarConverter.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
+/*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 18:24:34 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/08 17:59:02 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/09 16:38:07 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ class ScalarConverter
 		} t_type;
 
 		ScalarConverter();
+		ScalarConverter& operator = (const ScalarConverter& src);
 		static t_type getType(std::string& s);
 
 	protected:
