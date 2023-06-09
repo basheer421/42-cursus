@@ -6,13 +6,11 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 18:24:31 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/09 16:39:41 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/09 16:55:18 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
-
-ScalarConverter::ScalarConverter() {}
 
 ScalarConverter& ScalarConverter::operator = (const ScalarConverter& src)
 {
