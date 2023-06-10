@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Array.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 23:03:04 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/09 23:55:56 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/10 18:57:39 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ class Array
 		Array():data(NULL), length(0) {}
 		Array(unsigned int n):data(new T[n]), length(n) {}
 		~Array() {if (data) delete[] data;}
-		Array(const Array& src)
+		Array(const Array& src):data(NULL), length(0)
 		{
 			if (this == &src)
 				return ;
@@ -37,7 +37,7 @@ class Array
 			if (this == &src)
 				return *this;
 			if (data)
-				delete data;
+				delete[] data;
 			if (!src.data)
 			{
 				data = NULL;
