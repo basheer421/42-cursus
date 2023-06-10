@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:43:35 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/09 20:14:03 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/10 14:03:31 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ void identify(Base* p)
 void identify(Base& p)
 {
 	try {
-		dynamic_cast<A&>(p);
+		(void) dynamic_cast<A&>(p);
 		std::cout << "class A\n";
 		return ;
 	} catch (std::exception& e) {}
 	try {
-		dynamic_cast<B&>(p);
+		(void) dynamic_cast<B&>(p);
 		std::cout << "class B\n";
 		return ;
 	} catch (std::exception& e) {}
