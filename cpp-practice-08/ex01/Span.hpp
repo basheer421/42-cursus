@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Span.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 01:43:07 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/11 04:10:28 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/11 14:45:40 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,6 @@ class Span
 		
 		void addNumber(int num);
 		
-		
-		
-		int shortestSpan();
-		int longestSpan();
-
 		template <typename iterator>
 		void addRange(iterator first, iterator last)
 		{
@@ -50,4 +45,7 @@ class Span
 				first++;
 			}
 		}
+
+		int shortestSpan();
+		int longestSpan();
 };
