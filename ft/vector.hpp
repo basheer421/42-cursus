@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:05 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/12 19:18:05 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/12 22:33:53 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ class vector
 		typedef typename allocator_type::difference_type difference_type;
 
 	private:
-		pointer			_data;
+		pointer		_data;
 		std::size_t	_size;
 		std::size_t	_capacity;
 		Alloc allocator;
@@ -48,6 +48,8 @@ class vector
 	public:
 		
 		// iterators TODO
+
+		allocator_type get_allocator() const {return (allocator);}
 
 		explicit vector (const allocator_type& alloc = allocator_type()):
 			_data(NULL),
@@ -67,10 +69,33 @@ class vector
 				allocator.construct(&(_data[i]), val);
 		}
 		
-		vector(const vector& src); // TODO
+		vector(const vector& src)
+			:	_data(NULL),
+				allocator(src.allocator)
+		{
+			if (this == &src)
+				return ;
+			*this = src;
+		}
 
-		vector& operator = (const vector& src); // TODO
-		// TODO
+		vector& operator = (const vector& src)
+		{
+			if (this == &src)
+				return (*this);
+			allocator = src.allocator;
+			if (_data)
+			{
+				for (size_type i = 0; i < _size; i++)
+					allocator.destroy(&(_data[i]));
+				allocator.deallocate(_data, _capacity);
+			}
+			_capacity = 0;
+			reserve(src._capacity);
+			_size = 0;
+			for (size_type i = 0; i < src._size; i++)
+				allocator.construct(&(_data[i]), src[i]);
+			return (*this);
+		}
 
 		template <class InputIterator> vector (InputIterator first,
 			InputIterator last, const allocator_type& alloc = allocator_type());
@@ -224,6 +249,23 @@ class vector
 			allocator.destroy(&(_data[--_size]));
 		}
 
+		// void swap(vector& x)
+		// {
+		// 	pointer x_data = x.data();
+
+		// 	if (_data)
+		// 	{
+		// 		for (size_type i = 0; i < _size; i++)
+		// 			allocator.destroy(&(_data[i]));
+		// 		allocator.deallocate(_data, _capacity);
+		// 	}
+		// 	reserve(x.capacity());
+			
+		// 	allocator = x.get_allocator();
+			
+		// 	for (size_type i = 0; i < )
+			
+		// }
 
 };
 

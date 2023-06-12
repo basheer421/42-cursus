@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:09 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/12 19:20:47 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/12 22:33:13 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,21 @@ int main(void)
 	for (size_t i = 0; i < s.size(); i++)
 		std::cout << s[i] << "\n";
 
+
 	std::cout << f.capacity() << "\n";
 	std::cout << s.capacity() << "\n";
+
+	std::cout << "----\n";
+	ft::vector<std::string> f3(f);
+
+	std::cout << f3.capacity() << "\n";
+
+	for (size_t i = 0; i < f.size(); i++)
+		std::cout << f3[i] << "\n";
+
+	std::cout << "----\n";
+
+
 
 	return (0);
 }
