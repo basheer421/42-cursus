@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
+/*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:05 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/12 22:33:53 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/13 01:18:05 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ class vector
 		
 		vector(const vector& src)
 			:	_data(NULL),
+				_size(0),
+				_capacity(0),
 				allocator(src.allocator)
 		{
 			if (this == &src)
@@ -82,18 +84,16 @@ class vector
 		{
 			if (this == &src)
 				return (*this);
-			allocator = src.allocator;
+			while (_size > 0)
+				pop_back();
 			if (_data)
-			{
-				for (size_type i = 0; i < _size; i++)
-					allocator.destroy(&(_data[i]));
 				allocator.deallocate(_data, _capacity);
-			}
+			allocator = src.allocator;
 			_capacity = 0;
+			_data = NULL;
 			reserve(src._capacity);
-			_size = 0;
 			for (size_type i = 0; i < src._size; i++)
-				allocator.construct(&(_data[i]), src[i]);
+				push_back(src[i]);
 			return (*this);
 		}
 
@@ -116,6 +116,10 @@ class vector
 		
 		size_type max_size() const {return allocator.max_size();}
 		
+		/**
+		 * Performance idea: Maybe instead we could not construct and destroy,
+		 * 	deallocate the main pointer but keep the original values
+		*/
 		void reserve(size_type n)
 		{
 			pointer tmp;
@@ -131,12 +135,6 @@ class vector
 			}
 			tmp = _data;
 			_data = allocator.allocate(n);
-
-			/**
-			 * Performance idea: Maybe instead we could not construct and destroy,
-			 * 	deallocate the main pointer but keep the original values
-			 * 
-			*/
 
 			for (i = 0; i < _size; i++)
 				allocator.construct(&(_data[i]), tmp[i]);
@@ -249,24 +247,14 @@ class vector
 			allocator.destroy(&(_data[--_size]));
 		}
 
-		// void swap(vector& x)
-		// {
-		// 	pointer x_data = x.data();
-
-		// 	if (_data)
-		// 	{
-		// 		for (size_type i = 0; i < _size; i++)
-		// 			allocator.destroy(&(_data[i]));
-		// 		allocator.deallocate(_data, _capacity);
-		// 	}
-		// 	reserve(x.capacity());
-			
-		// 	allocator = x.get_allocator();
-			
-		// 	for (size_type i = 0; i < )
-			
-		// }
-
+		void swap(vector& x)
+		{
+			if (this == &x)
+				return ;
+			vector<value_type, allocator_type> tmp(*this);
+			*this = x;
+			x = tmp;
+		}
 };
 
 }
