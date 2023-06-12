@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:05 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/12 16:51:32 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/12 18:56:19 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,16 @@ class vector
 			if (n <= _capacity)
 				return ;
 			tmp = _data;
-			_data = allocator.allocate(n);	
+			_data = allocator.allocate(n);
+			/**
+			 * Performance idea: Maybe instead we could not construct and destroy,
+			 * 	deallocate the main pointer but keep the original values
+			 * 
+			*/
 			for (i = 0; i < _size; i++)
-				_data[i] = tmp[i];
+				allocator.construct(&(_data[i]), tmp[i]);
+			for (i = 0; i < _size; i++)
+				allocator.destroy(&(tmp[i]));
 			allocator.deallocate(tmp, _capacity);
 			_capacity = n;
 		}
@@ -180,6 +187,19 @@ class vector
 		const value_type* data() const
 		{
 			return (_data);
+		}
+
+		/* --- Modifiers --- */
+		// template <class InputIterator>  void assign (InputIterator first, InputIterator last); // TODO
+
+		void assign(size_type n, const value_type& val)
+		{
+			reserve(n);
+			for (size_type i = 0; i < _size; i++)
+				allocator.destroy(&(_data[i]));
+			for (size_type i = 0; i < n; i++)
+				allocator.construct(&(_data[i]), val);
+			_size = n;
 		}
 };
 
