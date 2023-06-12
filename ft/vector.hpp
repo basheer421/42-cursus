@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:05 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/12 18:56:19 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/12 19:18:05 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,13 +98,21 @@ class vector
 
 			if (n <= _capacity)
 				return ;
+			if (!_data)
+			{
+				_data = allocator.allocate(n);
+				_capacity = n;
+				return ;
+			}
 			tmp = _data;
 			_data = allocator.allocate(n);
+
 			/**
 			 * Performance idea: Maybe instead we could not construct and destroy,
 			 * 	deallocate the main pointer but keep the original values
 			 * 
 			*/
+
 			for (i = 0; i < _size; i++)
 				allocator.construct(&(_data[i]), tmp[i]);
 			for (i = 0; i < _size; i++)
@@ -201,6 +209,22 @@ class vector
 				allocator.construct(&(_data[i]), val);
 			_size = n;
 		}
+
+		void push_back(const value_type& val)
+		{
+			if (!_data)
+				reserve(10);
+			else if (_size == _capacity)
+				reserve(_size * 2);
+			allocator.construct(&(_data[_size++]), val);
+		}
+
+		void pop_back()
+		{
+			allocator.destroy(&(_data[--_size]));
+		}
+
+
 };
 
 }
