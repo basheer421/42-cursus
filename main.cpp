@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:09 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/14 02:34:30 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/14 02:52:50 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,15 @@ int main(void)
 	}
 
 	std::cout << "------\nIterators:\n";
+	mine = mine2;
 	for (ft::vector<int>::iterator it = mine.begin(); it != mine.end(); it++)
 	{
 		std::cout << *it << "\n";
 	}
+
 	std::cout << "-----\n";
+
+	stl = stl2;
 	for (std::vector<int>::iterator it = stl.begin(); it != stl.end(); it++)
 	{
 		std::cout << *it << "\n";

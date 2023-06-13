@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:05 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/14 02:36:41 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/14 02:53:50 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,12 @@ class vector
 		vector& operator = (const vector& src)
 		{
 			if (this == &src)
-				return (*this);
-			while (_size > 0)
-				pop_back();
+				return (*this);			
 			if (_data)
+			{
+				clear();
 				allocator.deallocate(_data, _capacity);
+			}
 			allocator = src.allocator;
 			_capacity = 0;
 			_data = NULL;
@@ -99,8 +100,10 @@ class vector
 			return (*this);
 		}
 
-		template <class InputIterator> vector (InputIterator first,
-			InputIterator last, const allocator_type& alloc = allocator_type());
+		template <class InputIterator>
+		vector (InputIterator first,
+				InputIterator last,
+				const allocator_type& alloc = allocator_type());
 			// TODO
 
 		~vector()
