@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:05 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/13 01:18:05 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/13 15:46:11 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <memory>
 #include <cstddef>
 #include <stdexcept>
+#include <exception>
 
 namespace ft
 {
@@ -41,9 +42,6 @@ class vector
 		std::size_t	_size;
 		std::size_t	_capacity;
 		Alloc allocator;
-
-
-		class out_of_range : public std::exception {};
 
 	public:
 		
@@ -150,7 +148,7 @@ class vector
 				return ;
 			if (n < _size)
 			{
-				for (size_type i = n - 1; i < _size; i++)
+				for (size_type i = n; i < _size; i++)
 					allocator.destroy(&(_data[i]));
 				_size = n;
 				return ;
@@ -179,14 +177,14 @@ class vector
 		reference at(size_type n)
 		{
 			if (n >= size())
-				throw out_of_range();
+				throw std::out_of_range("out of range");
 			return (_data[n]);
 		}
 
 		const_reference at(size_type n) const
 		{
 			if (n >= size())
-				throw out_of_range();
+				throw std::out_of_range("out of range");
 			return (_data[n]);
 		}
 
@@ -244,6 +242,8 @@ class vector
 
 		void pop_back()
 		{
+			if (!_data)
+				return ;
 			allocator.destroy(&(_data[--_size]));
 		}
 
@@ -255,6 +255,9 @@ class vector
 			*this = x;
 			x = tmp;
 		}
+
+		void clear() {resize(0);}
+
 };
 
 }
