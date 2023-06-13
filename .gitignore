@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+g_tester/*
+
+.vscode/*
