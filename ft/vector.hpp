@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
+/*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:05 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/13 15:46:11 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/14 02:36:41 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <cstddef>
 #include <stdexcept>
 #include <exception>
+#include "utils/vector_iterator.hpp"
 
 namespace ft
 {
@@ -28,14 +29,17 @@ class vector
 		typedef T value_type;
 		typedef Alloc allocator_type;
 
-		typedef typename allocator_type::reference reference;
-		typedef typename allocator_type::const_reference const_reference;
+		typedef typename allocator_type::reference			reference;
+		typedef typename allocator_type::const_reference	const_reference;
 
-		typedef typename allocator_type::pointer pointer;
-		typedef typename allocator_type::const_pointer const_pointer;
+		typedef typename allocator_type::pointer			pointer;
+		typedef typename allocator_type::const_pointer		const_pointer;
 
-		typedef typename allocator_type::size_type size_type;
-		typedef typename allocator_type::difference_type difference_type;
+		typedef typename allocator_type::size_type			size_type;
+		typedef typename allocator_type::difference_type	difference_type;
+
+		typedef vector_iterator<T>							iterator;
+		typedef vector_iterator<const T>					const_iterator;
 
 	private:
 		pointer		_data;
@@ -258,6 +262,25 @@ class vector
 
 		void clear() {resize(0);}
 
+		iterator begin()
+		{
+			return iterator(_data);
+		}
+
+		const_iterator begin() const
+		{
+			return const_iterator(_data);
+		}
+
+		iterator end()
+		{
+			return iterator(_data + _size);
+		}
+
+		const_iterator end() const
+		{
+			return const_iterator(_data + _size);
+		}
 };
 
 }

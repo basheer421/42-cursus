@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 19:09:00 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/14 01:57:28 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/14 02:21:01 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,16 @@ namespace ft
 {
 
 template <class T>
-class vector_iterator : public iterator<random_access_iterator_tag>
+class vector_iterator
 {
+    // Types
+    public:
+        typedef T                              value_type;
+        typedef T*                             pointer;
+        typedef T&                             reference;
+        typedef ptrdiff_t                      difference_type;
+        typedef random_access_iterator_tag     iterator_category;
+    
     private:
         pointer ptr;
         
