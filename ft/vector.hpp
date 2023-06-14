@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:05 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/14 14:56:24 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/14 17:51:41 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,6 +248,27 @@ class vector
 				allocator.construct(&(_data[i]), val);
 			_size = n;
 		}
+
+		iterator erase(iterator pos) {return erase(pos, pos + 1);}
+
+		iterator erase(iterator first, iterator last)
+		{
+			size_type dist = 0;
+			iterator it = last;
+			while (first++ != last)
+				++dist;
+			if (dist == 0)
+				return last;
+			while (it != end())
+			{
+				*(it - dist) = *it;
+				++it;
+			}
+			for (size_type i = 0; i < dist; i++)
+				pop_back();
+			return it;
+		}
+
 
 		void push_back(const value_type& val)
 		{
