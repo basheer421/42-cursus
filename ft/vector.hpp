@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:05 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/14 17:51:41 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/14 23:34:18 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 #include <cstddef>
 #include <stdexcept>
 #include <exception>
-#include "utils/vector_iterator.hpp"
+#include "utils/iterator.hpp"
+#include "utils/reverse_iterator.hpp"
 #include "utils/enable_if.hpp"
 
 namespace ft
@@ -39,8 +40,12 @@ class vector
 		typedef typename allocator_type::size_type			size_type;
 		typedef typename allocator_type::difference_type	difference_type;
 
-		typedef vector_iterator<T>							iterator;
-		typedef vector_iterator<const T>					const_iterator;
+		typedef RAI_iterator<T>								iterator;
+		typedef RAI_iterator<const T>						const_iterator;
+
+		typedef reverse_RAI_iterator<iterator>				reverse_iterator;
+		typedef reverse_RAI_iterator<const_iterator>		const_reverse_iterator;
+
 
 	private:
 		pointer		_data;
@@ -315,6 +320,30 @@ class vector
 		const_iterator end() const
 		{
 			return const_iterator(_data + _size);
+		}
+
+		reverse_iterator rbegin()
+		{
+			// iterator it(end() - 1);
+			return reverse_iterator(end() - 1);
+		}
+		
+		const_reverse_iterator rbegin() const
+		{
+			// const_iterator it(end() - 1);
+			return const_reverse_iterator(end() - 1);
+		}
+
+		reverse_iterator rend()
+		{
+			// iterator it();
+			return reverse_iterator(begin() - 1);
+		}
+
+		const_reverse_iterator rend() const
+		{
+			// const_iterator it();
+			return const_reverse_iterator(begin() - 1);
 		}
 
 };
