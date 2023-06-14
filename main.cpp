@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:09 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/14 02:52:50 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/14 14:56:58 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int main(void)
 	std::vector<int> stl2;
 
 	mine.assign(5, 2);
-	mine2.assign(3, 3);
+	mine2.assign(mine.begin(), mine.begin() + 2);
 	stl.assign(5, 2);
-	stl2.assign(3, 3);
+	stl2.assign(stl.begin(), stl.begin() + 2);
 	for (size_t i = 0; i < mine.size(); i++)
 	{
 		std::cout << mine.at(i) << "\n";

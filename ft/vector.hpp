@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:05 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/14 02:53:50 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/14 14:56:24 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stdexcept>
 #include <exception>
 #include "utils/vector_iterator.hpp"
+#include "utils/enable_if.hpp"
 
 namespace ft
 {
@@ -226,7 +227,17 @@ class vector
 		}
 
 		/* --- Modifiers --- */
-		// template <class InputIterator>  void assign (InputIterator first, InputIterator last); // TODO
+		template <class InputIterator>
+		typename ft::enable_if<!ft::is_integral<InputIterator>::value, void>::type 
+		assign (InputIterator first, InputIterator last)
+		{
+			clear();
+			while (first != last)
+			{
+				push_back(*first);
+				++first;
+			}
+		};
 
 		void assign(size_type n, const value_type& val)
 		{
@@ -284,6 +295,7 @@ class vector
 		{
 			return const_iterator(_data + _size);
 		}
+
 };
 
 }
