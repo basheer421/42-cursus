@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
+/*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:09 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/15 19:50:24 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/16 01:16:33 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,21 @@ int main ()
   it = myvector.begin();
   it = myvector.insert ( it , 200 );
 
-//   myvector.insert (it,2,300);
+  myvector.insert (it,2,300);
 
-//   // "it" no longer valid, get a new one:
-//   it = myvector.begin();
+  // "it" no longer valid, get a new one:
+  it = myvector.begin();
 
-//   ft::vector<int> anothervector (2,400);
-//   myvector.insert (it+2,anothervector.begin(),anothervector.end());
+  ft::vector<int> anothervector (2,400);
+  myvector.insert (it+2,anothervector.begin(),anothervector.end());
 
-//   int myarray [] = { 501,502,503 };
-//   myvector.insert (myvector.begin(), myarray, myarray+3);
+  int myarray [] = { 501,502,503 };
+  myvector.insert (myvector.begin(), myarray, myarray+3);
 
   std::cout << "myvector contains:";
   for (it=myvector.begin(); it<myvector.end(); it++)
     std::cout << ' ' << *it;
-//   std::cout << '\n';
+  std::cout << '\n';
 
   return 0;
 }

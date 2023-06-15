@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
+/*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:05 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/15 19:49:45 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/16 01:15:45 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,23 +265,21 @@ class vector
 
 		iterator insert(iterator pos, const value_type& val)
 		{
+			difference_type dist = (pos.getPtr() - begin().getPtr());
 			insert(pos, 1, val);
-			
-			return pos;
+			return iterator(begin().getPtr() + dist);
 		}
 
+		// 1 9 2 3 4 5 /2 3 4 5
 		void insert(iterator pos, size_type n, const value_type& val)
 		{
-			reserve(_size + n);
+			// reserve(_size + n);
 			vector<value_type> tmp(pos, end());
 			erase(pos, end());
-			
 			for (size_type i = 0; i < n; i++)
 				push_back(val);
-			
 			for (size_type i = 0; i < tmp.size(); i++)
 				push_back(tmp[i]);
-			std::cout << "wow: " << "\n";
 		}
 
 		template <class InputIterator>
@@ -289,18 +287,25 @@ class vector
 			typename ft::enable_if<!ft::is_integral<InputIterator>::value, void>::type* = NULL)
 		{
 			
-			size_type len = 0;
-			InputIterator it = &(*first);
-			while (it++ != last)
-				++len;
-			reserve(_size + len);
+			// size_type len = 0;
+			// InputIterator it = &(*first);
+			// while (it++ != last)
+			// 	++len;
+			// // reserve(_size + len);
+			// vector<value_type> tmp(pos, end());
+			// erase(pos, end());
+			// while (first != last)
+			// {
+			// 	push_back(*first);
+			// 	++first;
+			// }
+			// for (size_type i = 0; i < tmp.size(); i++)
+			// 	push_back(tmp[i]);
+
 			vector<value_type> tmp(pos, end());
 			erase(pos, end());
-			while (first != last)
-			{
-				push_back(*first);
-				++first;
-			}
+			for (InputIterator it = first; it != last; it++)
+				push_back(*it);
 			for (size_type i = 0; i < tmp.size(); i++)
 				push_back(tmp[i]);
 		}
