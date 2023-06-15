@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reverse_iterator.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 19:10:36 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/15 01:55:19 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/15 13:36:44 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,15 +151,7 @@ template <class It>
 reverse_RAI_iterator<It> operator+(typename ft::reverse_RAI_iterator<It>::difference_type n,
                                 const reverse_RAI_iterator<It> &a)
 {
-    return reverse_RAI_iterator<It>(n - a);
-}
-
-// "n - a" case
-template <class It>
-reverse_RAI_iterator<It> operator-(typename ft::reverse_RAI_iterator<It>::difference_type n,
-                                const reverse_RAI_iterator<It> &a)
-{
-    return reverse_RAI_iterator<It>(n + a);
+    return reverse_RAI_iterator<It>(a + n);
 }
 
 }

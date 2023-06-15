@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:05 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/15 01:44:24 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/15 19:49:45 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ class vector
 		Alloc allocator;
 
 	public:
-		
-		// iterators TODO
 
 		allocator_type get_allocator() const {return (allocator);}
 
@@ -72,9 +70,26 @@ class vector
 				_capacity(n),
 				allocator(alloc)
 		{
+			
 			_data = allocator.allocate(n);
 			for (size_type i = 0; i < n; i++)
 				allocator.construct(&(_data[i]), val);
+		}
+
+		template <class InputIterator>
+		vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(),
+			typename ft::enable_if<!ft::is_integral<InputIterator>::value, void>::type* = NULL):
+				_data(NULL),
+				_size(0),
+				_capacity(0),
+				allocator(alloc)
+		{
+			size_type len = 0;
+			InputIterator it(first);
+			while (it++ != last)
+				++len;
+			reserve(len);
+			assign(first, last);
 		}
 		
 		vector(const vector& src)
@@ -105,12 +120,6 @@ class vector
 				push_back(src[i]);
 			return (*this);
 		}
-
-		template <class InputIterator>
-		vector (InputIterator first,
-				InputIterator last,
-				const allocator_type& alloc = allocator_type());
-			// TODO
 
 		~vector()
 		{
@@ -233,7 +242,7 @@ class vector
 
 		/* --- Modifiers --- */
 		template <class InputIterator>
-		typename ft::enable_if<!ft::is_integral<InputIterator>::value, void>::type 
+		typename ft::enable_if<!ft::is_integral<InputIterator>::value, void>::type
 		assign (InputIterator first, InputIterator last)
 		{
 			clear();
@@ -254,6 +263,48 @@ class vector
 			_size = n;
 		}
 
+		iterator insert(iterator pos, const value_type& val)
+		{
+			insert(pos, 1, val);
+			
+			return pos;
+		}
+
+		void insert(iterator pos, size_type n, const value_type& val)
+		{
+			reserve(_size + n);
+			vector<value_type> tmp(pos, end());
+			erase(pos, end());
+			
+			for (size_type i = 0; i < n; i++)
+				push_back(val);
+			
+			for (size_type i = 0; i < tmp.size(); i++)
+				push_back(tmp[i]);
+			std::cout << "wow: " << "\n";
+		}
+
+		template <class InputIterator>
+		void insert(iterator pos, InputIterator first, InputIterator last,
+			typename ft::enable_if<!ft::is_integral<InputIterator>::value, void>::type* = NULL)
+		{
+			
+			size_type len = 0;
+			InputIterator it = &(*first);
+			while (it++ != last)
+				++len;
+			reserve(_size + len);
+			vector<value_type> tmp(pos, end());
+			erase(pos, end());
+			while (first != last)
+			{
+				push_back(*first);
+				++first;
+			}
+			for (size_type i = 0; i < tmp.size(); i++)
+				push_back(tmp[i]);
+		}
+
 		iterator erase(iterator pos) {return erase(pos, pos + 1);}
 
 		iterator erase(iterator first, iterator last)
@@ -266,6 +317,7 @@ class vector
 				return last;
 			while (it != end())
 			{
+				allocator.destroy(&(*(it - dist)));
 				*(it - dist) = *it;
 				++it;
 			}
@@ -273,7 +325,6 @@ class vector
 				pop_back();
 			return it;
 		}
-
 
 		void push_back(const value_type& val)
 		{
@@ -324,25 +375,21 @@ class vector
 
 		reverse_iterator rbegin()
 		{
-			// iterator it(end() - 1);
 			return reverse_iterator(end() - 1);
 		}
 		
 		const_reverse_iterator rbegin() const
 		{
-			// const_iterator it(end() - 1);
 			return const_reverse_iterator(end() - 1);
 		}
 
 		reverse_iterator rend()
 		{
-			// iterator it();
 			return reverse_iterator(begin() - 1);
 		}
 
 		const_reverse_iterator rend() const
 		{
-			// const_iterator it();
 			return const_reverse_iterator(begin() - 1);
 		}
 

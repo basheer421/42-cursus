@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bammar <bammar@student.42.fr>              +#+  +:+       +#+         #
+#    By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/03 23:22:01 by bammar            #+#    #+#              #
-#    Updated: 2023/06/11 23:44:51 by bammar           ###   ########.fr        #
+#    Updated: 2023/06/15 13:11:22 by bammar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ FILES	=	main.cpp
 
 CXX		=	c++
 
-CXXFLAGS=	-Wall -Wextra -Werror -std=c++98
+CXXFLAGS=	-Wall -Wextra -Werror -std=c++98 -g
 
 OBJS	=	$(FILES:.cpp=.o)
 
