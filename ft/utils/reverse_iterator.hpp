@@ -6,13 +6,14 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 19:10:36 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/16 22:29:38 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/16 23:11:27 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include "iterator.hpp"
+#include "iterator_traits.hpp"
 
 namespace ft
 {
@@ -21,12 +22,12 @@ template <class Iter>
 class reverse_RAI_iterator
 {
     public:
-        typedef Iter                                        iterator_type;
-        typedef typename iterator_type::value_type          value_type;
-        typedef typename iterator_type::pointer             pointer;
-        typedef typename iterator_type::reference           reference;
-        typedef typename iterator_type::difference_type     difference_type;
-        typedef typename iterator_type::iterator_category   iterator_category;
+        typedef Iter iterator_type;
+        typedef typename ft::iterator_traits<Iter>::value_type value_type;
+        typedef typename ft::iterator_traits<Iter>::pointer pointer;
+        typedef typename ft::iterator_traits<Iter>::reference reference;
+        typedef typename ft::iterator_traits<Iter>::difference_type difference_type;
+        typedef typename ft::iterator_traits<Iter>::iterator_category iterator_category;
     
     private:
         iterator_type current;
@@ -51,11 +52,18 @@ class reverse_RAI_iterator
 
         iterator_type base() const {return current;}
 
-        reference operator*() const {return *current;}
+        reference operator*() const {Iter tmp = current; return *--tmp;}
 
-        pointer operator->() const {return &(operator*());}
+        pointer operator->() const
+        {
+            iterator_type tmp = base();
+			return ((--tmp).operator->());
+        }
 
-        reference operator[](difference_type n) const {return *(current - n);}
+        reference operator[](difference_type n) const
+        {
+            return base()[-n - 1];
+        }
 
         reverse_RAI_iterator& operator++() {--current; return *this;}
 
@@ -77,12 +85,12 @@ class reverse_RAI_iterator
 
         reverse_RAI_iterator operator+(difference_type n) const
         {
-            return reverse_RAI_iterator((current - n));
+            return reverse_RAI_iterator(base()-n);
         }
 
         reverse_RAI_iterator operator-(difference_type n) const
         {
-            return reverse_RAI_iterator((current + n));
+            return reverse_RAI_iterator(base()+n);
         }
 
         reverse_RAI_iterator& operator+=(difference_type n)
@@ -117,7 +125,7 @@ template< class Iterator1, class Iterator2 >
 bool operator<( const reverse_RAI_iterator<Iterator1>& lhs,
                 const reverse_RAI_iterator<Iterator2>& rhs )
 {
-    return (lhs > rhs);
+    return (lhs.base() > rhs.base());
 }
 
 template< class Iterator1, class Iterator2 >

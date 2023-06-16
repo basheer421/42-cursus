@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:05 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/16 22:37:18 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/16 23:18:14 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -395,22 +395,22 @@ class vector
 
 		reverse_iterator rbegin()
 		{
-			return reverse_iterator(end() - 1);
+			return reverse_iterator(end());
 		}
 		
 		const_reverse_iterator rbegin() const
 		{
-			return const_reverse_iterator(end() - 1);
+			return const_reverse_iterator(end());
 		}
 
 		reverse_iterator rend()
 		{
-			return reverse_iterator(begin() - 1);
+			return reverse_iterator(begin());
 		}
 
 		const_reverse_iterator rend() const
 		{
-			return const_reverse_iterator(begin() - 1);
+			return const_reverse_iterator(begin());
 		}
 
 };
