@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:05 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/16 01:15:45 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/16 18:01:47 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -310,25 +310,31 @@ class vector
 				push_back(tmp[i]);
 		}
 
-		iterator erase(iterator pos) {return erase(pos, pos + 1);}
+		iterator erase(iterator pos)
+		{
+			return erase(pos, pos + 1);
+		}
 
 		iterator erase(iterator first, iterator last)
 		{
-			size_type dist = 0;
+			if (first == end())
+				return end();
+			difference_type dist = 0;
 			iterator it = last;
 			while (first++ != last)
 				++dist;
 			if (dist == 0)
 				return last;
+			iterator ret = it - dist;
 			while (it != end())
 			{
 				allocator.destroy(&(*(it - dist)));
 				*(it - dist) = *it;
 				++it;
 			}
-			for (size_type i = 0; i < dist; i++)
+			for (difference_type i = 0; i < dist; i++)
 				pop_back();
-			return it;
+			return ret;
 		}
 
 		void push_back(const value_type& val)
