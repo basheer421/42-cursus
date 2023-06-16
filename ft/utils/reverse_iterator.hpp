@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reverse_iterator.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
+/*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 19:10:36 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/15 13:36:44 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/16 22:29:38 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,13 @@ class reverse_RAI_iterator
         template <class U>
         reverse_RAI_iterator(const reverse_RAI_iterator<U>& src)
         {
-            if (this == &src)
-                return ;
             *this = src;
         }
 
         template <class U>
         reverse_RAI_iterator& operator=(const reverse_RAI_iterator<U>& src)
         {
-            if (this == &src)
-                return *this;
-            current = src.current;
+            current = src.base();
             return *this;
         }
 
@@ -145,13 +141,20 @@ bool operator>=( const reverse_RAI_iterator<Iterator1>& lhs,
     return (lhs.base() <= rhs.base());
 }
 
-
-// "n + a" case
-template <class It>
-reverse_RAI_iterator<It> operator+(typename ft::reverse_RAI_iterator<It>::difference_type n,
-                                const reverse_RAI_iterator<It> &a)
+template< class Iter >
+reverse_RAI_iterator<Iter>
+    operator+( typename reverse_RAI_iterator<Iter>::difference_type n,
+               const reverse_RAI_iterator<Iter>& it )
 {
-    return reverse_RAI_iterator<It>(a + n);
+    return reverse_RAI_iterator<Iter>(it.base() - n);
 }
+
+template< class Iterator1, class Iterator2 >
+typename reverse_RAI_iterator<Iterator1>::difference_type
+    operator-( const reverse_RAI_iterator<Iterator1>& lhs,
+               const reverse_RAI_iterator<Iterator2>& rhs )
+{
+    return (rhs.base() - lhs.base());
+}               
 
 }

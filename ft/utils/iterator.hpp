@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 19:04:56 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/16 18:29:36 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/16 22:24:19 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,12 @@ class RAI_iterator
         template <class U>
         RAI_iterator(const RAI_iterator<U>& src)
         {
-            // if (this == (&src))
-            //     return ;
             *this = src;
         }
 
         template <class U>
         RAI_iterator& operator=(const RAI_iterator<U>& src)
         {
-            // if (this == (&src))
-            //     return *this;
             ptr = src.getPtr();
             return *this;
         }

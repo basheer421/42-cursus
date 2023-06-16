@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:05 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/16 18:59:02 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/16 22:37:18 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -356,11 +356,19 @@ class vector
 
 		void swap(vector& x)
 		{
-			if (this == &x)
-				return ;
-			vector<value_type, allocator_type> tmp(*this);
-			*this = x;
-			x = tmp;
+			pointer data_tmp = _data;
+			size_type size_tmp = _size;
+			size_type cap_tmp = _capacity;
+			allocator_type alloc_tmp = this->allocator;
+
+			this->_data = x._data;
+			this->_size = x._size;
+			this->_capacity = x._capacity;
+			this->allocator = x.allocator;
+			x._data = data_tmp;
+			x._size = size_tmp;
+			x._capacity = cap_tmp;
+			x.allocator = alloc_tmp;
 		}
 
 		void clear() {resize(0);}
