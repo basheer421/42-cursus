@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   iterator.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
+/*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 19:04:56 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/14 23:21:11 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/16 18:29:36 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
-
-#include "iterator.hpp"
 
 namespace ft
 {
@@ -48,17 +46,19 @@ class RAI_iterator
 
         ~RAI_iterator() {}
 
-        RAI_iterator(const RAI_iterator& src)
+        template <class U>
+        RAI_iterator(const RAI_iterator<U>& src)
         {
-            if (this == &src)
-                return ;
+            // if (this == (&src))
+            //     return ;
             *this = src;
         }
 
-        RAI_iterator& operator=(const RAI_iterator& src)
+        template <class U>
+        RAI_iterator& operator=(const RAI_iterator<U>& src)
         {
-            if (this == &src)
-                return *this;
+            // if (this == (&src))
+            //     return *this;
             ptr = src.getPtr();
             return *this;
         }
@@ -85,7 +85,7 @@ class RAI_iterator
 
         reference operator*() const {return *ptr;}
 
-        pointer operator->() {return &(operator*());}
+        pointer operator->() {return ptr;}
 
         RAI_iterator operator+(difference_type n) const
         {
@@ -98,9 +98,9 @@ class RAI_iterator
         }
 
         template <class T2>
-        RAI_iterator operator-(const RAI_iterator<T2>& b) const
+        difference_type operator-(const RAI_iterator<T2>& b) const
         {
-            return RAI_iterator<T>(ptr - b.getPtr());
+            return (ptr - b.getPtr());
         }
 
         RAI_iterator& operator+=(difference_type n)

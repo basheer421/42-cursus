@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:05 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/16 18:01:47 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/16 18:59:02 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "utils/iterator.hpp"
 #include "utils/reverse_iterator.hpp"
 #include "utils/enable_if.hpp"
+#include "utils/lexicographical_compare.hpp"
 
 namespace ft
 {
@@ -405,5 +406,55 @@ class vector
 		}
 
 };
+
+template< class T, class Alloc >
+bool operator==( const ft::vector<T, Alloc>& lhs,
+                 const ft::vector<T, Alloc>& rhs )
+{
+	size_t size = lhs.size();
+
+	if (size != rhs.size())
+		return false;
+	for (size_t i = 0; i < size; i++)
+		if (lhs[i] != rhs[i])
+			return false;
+	return true;
+}
+
+template< class T, class Alloc >
+bool operator!=( const ft::vector<T, Alloc>& lhs,
+                 const ft::vector<T, Alloc>& rhs )
+{
+	return (!(lhs == rhs));
+}
+
+template< class T, class Alloc >
+bool operator<( const ft::vector<T, Alloc>& lhs,
+                const ft::vector<T, Alloc>& rhs )
+{
+	return (lexicographical_compare(lhs.begin(), lhs.end(),
+		rhs.begin(), rhs.end()));
+}
+
+template< class T, class Alloc >
+bool operator<=( const ft::vector<T, Alloc>& lhs,
+                 const ft::vector<T, Alloc>& rhs )
+{
+	return ((lhs < rhs) || (lhs == rhs));
+}
+
+template< class T, class Alloc >
+bool operator>( const ft::vector<T, Alloc>& lhs,
+                const ft::vector<T, Alloc>& rhs )
+{
+	return (!(lhs <= rhs));
+}
+
+template< class T, class Alloc >
+bool operator>=( const ft::vector<T, Alloc>& lhs,
+                 const ft::vector<T, Alloc>& rhs )
+{
+	return (!(lhs < rhs));
+}
 
 }
