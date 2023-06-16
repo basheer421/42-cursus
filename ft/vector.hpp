@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:05 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/16 23:23:25 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/17 01:27:52 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,11 +136,7 @@ class vector
 		size_type size() const {return _size;}
 		
 		size_type max_size() const {return allocator.max_size();}
-		
-		/**
-		 * Performance idea: Maybe instead we could not construct and destroy,
-		 * 	deallocate the main pointer but keep the original values
-		*/
+
 		void reserve(size_type n)
 		{
 			pointer tmp;
@@ -271,10 +267,8 @@ class vector
 			return iterator(begin().getPtr() + dist);
 		}
 
-		// 1 9 2 3 4 5 /2 3 4 5
 		void insert(iterator pos, size_type n, const value_type& val)
 		{
-			// reserve(_size + n);
 			vector<value_type> tmp(pos, end());
 			erase(pos, end());
 			for (size_type i = 0; i < n; i++)
@@ -287,22 +281,6 @@ class vector
 		void insert(iterator pos, InputIterator first, InputIterator last,
 			typename ft::enable_if<!ft::is_integral<InputIterator>::value, void>::type* = NULL)
 		{
-			
-			// size_type len = 0;
-			// InputIterator it = &(*first);
-			// while (it++ != last)
-			// 	++len;
-			// // reserve(_size + len);
-			// vector<value_type> tmp(pos, end());
-			// erase(pos, end());
-			// while (first != last)
-			// {
-			// 	push_back(*first);
-			// 	++first;
-			// }
-			// for (size_type i = 0; i < tmp.size(); i++)
-			// 	push_back(tmp[i]);
-
 			vector<value_type> tmp(pos, end());
 			erase(pos, end());
 			for (InputIterator it = first; it != last; it++)
