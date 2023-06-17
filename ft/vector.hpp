@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:05 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/17 18:59:56 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/17 23:03:35 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ class vector
 
 		explicit vector (size_type n, const value_type& val = value_type(),
 			const allocator_type& alloc = allocator_type())
-			:	_size(n),
+			:	_data(NULL),
+				_size(n),
 				_capacity(n),
 				allocator(alloc)
 		{
