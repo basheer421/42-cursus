@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:05 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/17 01:27:52 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/17 18:59:56 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,7 @@ class vector
 				_capacity(n),
 				allocator(alloc)
 		{
-			
-			_data = allocator.allocate(n);
+			reserve(n);
 			for (size_type i = 0; i < n; i++)
 				allocator.construct(&(_data[i]), val);
 		}
@@ -142,6 +141,8 @@ class vector
 			pointer tmp;
 			size_type i;
 
+			if (n >= max_size())
+				throw std::length_error("cannot create std::vector larger than max_size()");
 			if (n <= _capacity)
 				return ;
 			if (!_data)
