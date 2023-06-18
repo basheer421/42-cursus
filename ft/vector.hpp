@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:05 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/18 04:24:35 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/19 01:24:30 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,11 @@ class vector
 
 		explicit vector (size_type n, const value_type& val = value_type(),
 			const allocator_type& alloc = allocator_type())
-			:	_size(n),
+			:	_data(NULL),
+				_size(n),
 				_capacity(n),
 				allocator(alloc)
 		{
-			
 			_data = allocator.allocate(n);
 			for (size_type i = 0; i < n; i++)
 				allocator.construct(&(_data[i]), val);
@@ -85,11 +85,13 @@ class vector
 				_capacity(0),
 				allocator(alloc)
 		{
+			if (&(*first) > &(*last))
+				throw std::length_error("first > last");
 			size_type len = 0;
 			InputIterator it(first);
 			while (it++ != last)
 				++len;
-			reserve(len);
+			// reserve(len);
 			assign(first, last);
 		}
 		
@@ -108,7 +110,7 @@ class vector
 		{
 			if (this == &src)
 				return (*this);			
-			if (_data)
+			if (!empty())
 			{
 				clear();
 				allocator.deallocate(_data, _capacity);
