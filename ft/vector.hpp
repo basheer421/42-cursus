@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:05 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/18 04:22:31 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/18 04:24:35 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,12 @@ class vector
 
 		explicit vector (size_type n, const value_type& val = value_type(),
 			const allocator_type& alloc = allocator_type())
-			:	_data(NULL),
-				_size(n),
+			:	_size(n),
 				_capacity(n),
 				allocator(alloc)
 		{
-			reserve(n);
+			
+			_data = allocator.allocate(n);
 			for (size_type i = 0; i < n; i++)
 				allocator.construct(&(_data[i]), val);
 		}
@@ -136,18 +136,12 @@ class vector
 		size_type size() const {return _size;}
 		
 		size_type max_size() const {return allocator.max_size();}
-		
-		/**
-		 * Performance idea: Maybe instead we could not construct and destroy,
-		 * 	deallocate the main pointer but keep the original values
-		*/
+
 		void reserve(size_type n)
 		{
 			pointer tmp;
 			size_type i;
 
-			if (n >= max_size())
-				throw std::length_error("cannot create std::vector larger than max_size()");
 			if (n <= _capacity)
 				return ;
 			if (!_data)
@@ -273,10 +267,8 @@ class vector
 			return iterator(begin().getPtr() + dist);
 		}
 
-		// 1 9 2 3 4 5 /2 3 4 5
 		void insert(iterator pos, size_type n, const value_type& val)
 		{
-			// reserve(_size + n);
 			vector<value_type> tmp(pos, end());
 			erase(pos, end());
 			for (size_type i = 0; i < n; i++)
@@ -289,22 +281,6 @@ class vector
 		void insert(iterator pos, InputIterator first, InputIterator last,
 			typename ft::enable_if<!ft::is_integral<InputIterator>::value, void>::type* = NULL)
 		{
-			
-			// size_type len = 0;
-			// InputIterator it = &(*first);
-			// while (it++ != last)
-			// 	++len;
-			// // reserve(_size + len);
-			// vector<value_type> tmp(pos, end());
-			// erase(pos, end());
-			// while (first != last)
-			// {
-			// 	push_back(*first);
-			// 	++first;
-			// }
-			// for (size_type i = 0; i < tmp.size(); i++)
-			// 	push_back(tmp[i]);
-
 			vector<value_type> tmp(pos, end());
 			erase(pos, end());
 			for (InputIterator it = first; it != last; it++)
