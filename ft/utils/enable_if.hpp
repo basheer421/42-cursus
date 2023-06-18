@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   enable_if.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
+/*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 13:29:40 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/14 14:50:12 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/19 02:07:30 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
+
+#include "iterator_traits.hpp"
 
 namespace ft
 {
@@ -51,5 +53,11 @@ template<> struct is_integral<unsigned long> : public true_type {};
 template<> struct is_integral<long long> : public true_type {};
 
 template<> struct is_integral<unsigned long long> : public true_type {};
+
+template <class T> struct is_RAI : public false_type {};
+
+template<> struct is_RAI<ft::random_access_iterator_tag> : public true_type {};
+
+template<> struct is_RAI<std::random_access_iterator_tag> : public true_type {};
 
 }

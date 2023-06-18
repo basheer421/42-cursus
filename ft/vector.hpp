@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:05 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/19 01:24:30 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/19 02:42:54 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,16 @@ class vector
 				_capacity(0),
 				allocator(alloc)
 		{
-			if (&(*first) > &(*last))
-				throw std::length_error("first > last");
+			ft::throwIfBadIterator(first, last);
 			size_type len = 0;
-			InputIterator it(first);
+			InputIterator it = first;
 			while (it++ != last)
+			{
 				++len;
-			// reserve(len);
+				if (len > max_size())
+					throw std::exception();
+			}
+			reserve(len);
 			assign(first, last);
 		}
 		

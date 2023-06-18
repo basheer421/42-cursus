@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 18:29:01 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/16 18:40:30 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/19 02:56:03 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,22 @@ bool lexicographical_compare(InputIt1 first1, InputIt1 last1,
     }
  
     return (first1 == last1) && (first2 != last2);
+}
+
+template <class Iter>
+typename ft::enable_if<is_RAI<typename ft::iterator_traits<Iter>::iterator_category>::value>::type
+throwIfBadIterator(Iter first, Iter last)
+{
+    if (first > last)
+        throw std::exception();
+}
+
+template <class Iter>
+typename ft::enable_if<!is_RAI<typename ft::iterator_traits<Iter>::iterator_category>::value>::type
+throwIfBadIterator(Iter first, Iter last)
+{
+    (void)first;
+    (void)last;
 }
 
 }
