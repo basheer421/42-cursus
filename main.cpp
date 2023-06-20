@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:09 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/19 06:09:52 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/20 14:24:50 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stack>
 #include "ft/stack.hpp"
 #include "ft/utils/pair.hpp"
+#include "ft/utils/rb_tree.hpp"
 
 
 void print_container(ft::vector<ft::pair<int, double> > c) 
@@ -31,18 +32,17 @@ void print_container(ft::vector<ft::pair<int, double> > c)
 
 int main ()
 {
-  // int x[] = {1, 2, 3, 4};
-  // ft::vector<int> myvector (x,x+4);        // vector with 2 elements
-  // ft::vector<int> vec2(myvector.begin(), myvector.end());
-  ft::vector<ft::pair<int, double> > p;
+  ft::rb_tree<std::string, std::string> tree;
+  tree.insert(ft::make_pair("1", "wow"));
+  tree.insert(ft::make_pair("-2", "ok"));
+  tree.insert(ft::make_pair("3", "90"));
+  tree.insert(ft::make_pair("4", "120"));
+  tree.insert(ft::make_pair("550", "0"));
+  tree.insert(ft::make_pair("4", "110"));
 
-  p.push_back(ft::make_pair(5, 3.3));
-  p.push_back(ft::make_pair(6, 7.3));
-  p.push_back(ft::make_pair(6, -7.3));
-  print_container(p);
-
-  // for (int i = 0; i < (int)myvector.size(); i++)
-  //   std::cout << myvector[i] << "\n";
+  std::cout << "Inorder traversal of the LLRB tree: ";
+  tree.printInorder();
+  std::cout << std::endl;
 
   return 0;
 }

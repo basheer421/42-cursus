@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rb_tree.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 00:46:25 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/20 02:30:03 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/20 14:23:53 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,18 +77,37 @@ class rb_tree
 		Node* get_root() const {return root;}
 		allocator_type get_allocator() const {return (allocator);}
 
-	private:
+		void insert(ft::pair<key_type, mapped_type> h)
+		{
+			root = insert_node(root, h.first, h.second);
+			root->color = BLACK;
+		}
 
-		
+
+		// FOR DEBUGGING
+		void printInorder() {
+			inorderTraversal(root);
+		}
+
+		// Inorder traversal to print the tree
+		void inorderTraversal(Node* node) {
+			if (node == NULL)
+				return;
+			inorderTraversal(node->left);
+			std::cout << "\n(" << node->pr.first << ", " << node->pr.second << ") ";
+			inorderTraversal(node->right);
+		}
+
+	private:
 
 		Node* root;
 		allocator_type allocator;
 
 		void flip_color(Node* node)
 		{
-			node->color = !node->color;
-			node->left->color = !node->left->color;
-			node->right->color = !node->right->color;
+			node->color = RED;
+			node->left->color = BLACK;
+			node->right->color = BLACK;
 		}
 
 		Node* rotate_left(Node* left)
@@ -125,12 +144,43 @@ class rb_tree
 
 			node = allocator.allocate(1);
 			allocator.construct(node, Node());
-			node->pr = make_pair(key, value);
+			node->pr = ft::make_pair(key, value);
 			node->color = RED;
 			node->left = NULL;
 			node->right = NULL;
 			return node;
 		}
+
+		bool is_red(Node* h)
+		{
+			if (h == NULL)
+				return false;
+			return (h->color == RED);
+		}
+
+		Node* insert_node(Node* h, key_type key, mapped_type value)
+		{
+			// Normal BST insertion.
+			if (h == NULL)
+				return make_node(key, value);
+			key_type k = h->pr.first;
+			if (key < k)
+				h->left = insert_node(h->left, key, value);
+			else if (key > k)
+				h->right = insert_node(h->right, key, value);
+			else
+				return h;
+
+			// LLRB tree part
+			if (is_red(h->right) && !is_red(h->left))
+				h = rotate_left(h);
+			if (is_red(h->left) && is_red(h->left->left))
+				h = rotate_right(h);
+			if (is_red(h->left) && is_red(h->right))
+				flip_color(h);
+
+			return h;
+    	}
 
 
 };
