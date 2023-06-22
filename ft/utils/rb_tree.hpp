@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 00:46:25 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/20 14:23:53 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/22 14:27:30 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 namespace ft
 {
 
-enum COLOR {BLACK, RED};		
+enum COLOR {BLACK, RED};
 
 template <typename Key, typename T>
 struct Node
@@ -72,7 +72,7 @@ class rb_tree
 			allocator = src.get_allocator();
 
 		}
-		~rb_tree() {} // remmber to deallocate
+		~rb_tree() {destroy_tree(root);}
 
 		Node* get_root() const {return root;}
 		allocator_type get_allocator() const {return (allocator);}
@@ -80,7 +80,19 @@ class rb_tree
 		void insert(ft::pair<key_type, mapped_type> h)
 		{
 			root = insert_node(root, h.first, h.second);
-			root->color = BLACK;
+			if (root)
+				root->color = BLACK;
+		}
+
+		void remove(Node* node, key_type key)
+		{
+			// if (!containes(root, key))
+			// 	return ;
+			// if (!is_red(root->left) && !is_red(root->right))
+			// 	root->color = RED;
+			node = remove_node(node, key);
+			if (node)
+				node->color = BLACK;
 		}
 
 
@@ -94,8 +106,19 @@ class rb_tree
 			if (node == NULL)
 				return;
 			inorderTraversal(node->left);
-			std::cout << "\n(" << node->pr.first << ", " << node->pr.second << ") ";
+			std::cout << "(" << node->pr.first << ", " << node->pr.second << ")\n";
 			inorderTraversal(node->right);
+		}
+
+		bool containes(Node* h, key_type key)
+		{
+			if (!h)
+				return false;
+			if (key == h->pr.first)
+				return true;
+			if (containes(h->left, key))
+				return true;
+			return containes(h->right, key);
 		}
 
 	private:
@@ -105,9 +128,9 @@ class rb_tree
 
 		void flip_color(Node* node)
 		{
-			node->color = RED;
-			node->left->color = BLACK;
-			node->right->color = BLACK;
+			node->color = (node->color == RED ? BLACK : RED);
+			node->left->color = (node->left->color == RED ? BLACK : RED);
+			node->right->color = (node->right->color == RED ? BLACK : RED);
 		}
 
 		Node* rotate_left(Node* left)
@@ -178,10 +201,121 @@ class rb_tree
 				h = rotate_right(h);
 			if (is_red(h->left) && is_red(h->right))
 				flip_color(h);
-
 			return h;
     	}
 
+		Node* move_red_left(Node* h)
+		{
+			flip_color(h);
+			if (h && h->right && is_red(h->right->left))
+			{
+				h->right = rotate_right(h->right);
+				h = rotate_left(h);
+				flip_color(h);
+			}
+			return h;
+		}
+
+		Node* move_red_right(Node* h)
+		{
+			flip_color(h);
+			if (h && h->left && is_red(h->left->left))
+			{
+				h = rotate_right(h);
+				flip_color(h);
+			}
+			return h;
+		}
+		
+		Node* fix(Node* h)
+		{
+			if (is_red(h->right))
+				h = rotate_left(h);
+			if (is_red(h->left) && is_red(h->left->left))
+				h = rotate_right(h);
+			if (is_red(h->left) && is_red(h->right))
+				flip_color(h);
+			return h;
+		}
+
+		Node* find_min(Node* h)
+		{
+			if (!h)
+				return NULL;
+			while (h->left)
+				h = h->left;
+			return h;
+		}
+
+		Node*  delete_min(Node* h)
+		{
+			if (!h->left)
+				return (NULL);
+			if (!h->left)
+			{
+				allocator.destroy(h);
+				allocator.deallocate(h, 1);
+				return (NULL);
+			}
+			if (!is_red(h->left) && !is_red(h->left->left))
+				h = move_red_left(h);
+			h->left = delete_min(h->left);
+			return fix(h);
+		}
+
+		Node* remove_node(Node* h, key_type key)
+		{
+			if (!h)
+				return NULL;
+			if (key < h->pr.first)
+			{
+				if (h->left)
+				{
+					if (!is_red(h->left) && !is_red(h->left->left))
+						h = move_red_left(h);
+					h->left = remove_node(h->left, key);
+				}
+			}
+			else
+			{
+				if (is_red(h->left))
+					h = rotate_right(h);
+
+
+				if (key == h->pr.first && !h->right)
+				{
+					allocator.destroy(h);
+					allocator.deallocate(h, 1);
+					return NULL;
+				}
+				if (h->right)
+				{
+					if (!is_red(h->right) && !is_red(h->right->left))
+						h = move_red_right(h);
+
+					if (key == h->pr.first)
+					{
+						Node* tmp = find_min(h->right);
+						h->pr.first = tmp->pr.first;
+						h->pr.second = tmp->pr.second;
+						h->right = delete_min(h->right);
+					}
+					else
+						h->right = remove_node(h->right, key);
+				}
+			}
+			return fix(h);
+		}
+
+		void destroy_tree(Node* node)
+		{
+			if (!node)
+				return ;
+			destroy_tree(node->left);
+			destroy_tree(node->right);
+			allocator.destroy(node);
+			allocator.deallocate(node, 1);
+		}
 
 };
 
