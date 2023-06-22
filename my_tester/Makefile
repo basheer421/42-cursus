@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+         #
+#    By: bammar <bammar@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/22 20:48:07 by bammar            #+#    #+#              #
-#    Updated: 2023/06/22 23:08:39 by bammar           ###   ########.fr        #
+#    Updated: 2023/06/23 01:08:46 by bammar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,41 +25,39 @@ CXXFLAGS=	-Wall -Wextra -Werror -std=c++98 -g
 
 VECOBJS	=	$(VECFILES:.cpp=.o)
 
-OBJDIR_FT = ft_objs
-OBJDIR_STD = std_objs
-
 .cpp.o:
-			mkdir -p $(OBJDIR_FT)
-			$(CXX) $(CXXFLAGS) -I $(FT_DICT) -D NAMESPACE=$(FLAG) -c $< -o $(OBJDIR_FT)/${<:.cpp=.o}
+	$(CXX) $(CXXFLAGS) -I $(FT_DICT) -D NAMESPACE=$(FLAG) -c $< -o $(<:.cpp=.o)
 
-all: 		$(NAME)
+
+all: 		fclean test 
 
 ft_vector: FLAG = ft
 ft_vector: $(VECOBJS)
 	$(CXX) $(VECOBJS) $(CXXFLAGS) -I $(FT_DICT) -D NAMESPACE=$(FLAG) -o $(FLAG)
-	@find $(VECOBJS) -type f -exec mv {} $(OBJDIR_FT) \;
 
 std_vector: FLAG = std
-std_vector: $(VECOBJS)
+std_vector: clean $(VECOBJS)
 	$(CXX) $(VECOBJS) $(CXXFLAGS) -I $(FT_DICT) -D NAMESPACE=$(FLAG) -o $(FLAG)
-	@find . -name "*.o" -exec mv {} $(OBJDIR_STD) \;
 
 $(NAME): ft_vector
-	$(eval FLAG = std)
 	$(MAKE) std_vector
 
-test:	ft_vector std_vector
-		mkdir -p out
-		./ft > out/ft_out
-		./std > out/std_out
+vector:	clean ft_vector
+	$(MAKE) clean
+	$(MAKE) std_vector
+	mkdir -p out
+	./ft > out/ft_out
+	./std > out/std_out
+	$(MAKE) fclean
+
+test:	vector
 
 clean:
 			rm -f $(VECOBJS)
 
 fclean:		clean
 			rm -f ft std
-			rm -rf out
 
 re:			fclean all
 
-.PHONY:		all clean fclean re $(NAME)
+.PHONY:		all clean fclean re $(NAME) vector
