@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 00:46:25 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/23 20:30:10 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/23 20:35:19 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ class rb_tree
 
 		mapped_type get(key_type key)
 		{
+			if (!root)
+				throw std::out_of_range("Empty");
 			mapped_type* value = get(root, key);
 			if (value)
 				return *value;
