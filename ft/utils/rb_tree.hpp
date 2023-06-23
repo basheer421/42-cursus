@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 00:46:25 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/23 20:56:26 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/24 02:17:30 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ class rb_tree
 				return *this;
 			root = src.get_root();
 			allocator = src.get_allocator();
-
+			return *this;
 		}
 		
 		~rb_tree() {destroy_tree(root);}
