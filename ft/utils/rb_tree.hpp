@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 00:46:25 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/23 14:24:51 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/23 15:12:32 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ class rb_tree
 		{
 			mapped_type* value = get(root, key);
 			if (value)
-				return value;
+				return *value;
 			throw std::out_of_range("Not inside");
 		}
 
@@ -94,19 +94,14 @@ class rb_tree
 		void insert(ft::pair<key_type, mapped_type> h)
 		{
 			root = insert_node(root, h.first, h.second);
-			if (root)
-				root->color = BLACK;
+			root->color = BLACK;
 		}
 
-		void remove(Node* node, key_type key)
+		void remove(key_type key)
 		{
-			// if (!containes(root, key))
-			// 	return ;
-			// if (!is_red(root->left) && !is_red(root->right))
-			// 	root->color = RED;
-			node = remove_node(node, key);
-			if (node)
-				node->color = BLACK;
+			root = remove_node(root, key);
+			if (root)
+				root->color = BLACK;
 		}
 
 
@@ -129,11 +124,11 @@ class rb_tree
 		Node* root;
 		allocator_type allocator;
 
-		bool is_less(key_type k1, key_type k2)
-		{
-			Compare cmp = Compare();
-			return cmp(k1, k2);
-		}
+
+		// bool is_less(key_type k1, key_type k2)
+		// {
+		// 	return Compare(k1, k2);
+		// }
 
 
 		mapped_type* get(Node* h, mapped_type key) const
@@ -142,7 +137,7 @@ class rb_tree
 			{
 				if (h->pr.first == key)
 					return (&(h->pr.second));
-				if (is_less(key, h->pr.first))
+				if (key < h->pr.first)
 					h = h->left;
 				else
 					h = h->right;
@@ -231,7 +226,7 @@ class rb_tree
 		Node* move_red_left(Node* h)
 		{
 			flip_color(h);
-			if (h && h->right && is_red(h->right->left))
+			if (is_red(h->right->left))
 			{
 				h->right = rotate_right(h->right);
 				h = rotate_left(h);
@@ -243,7 +238,7 @@ class rb_tree
 		Node* move_red_right(Node* h)
 		{
 			flip_color(h);
-			if (h && h->left && is_red(h->left->left))
+			if (is_red(h->left->left))
 			{
 				h = rotate_right(h);
 				flip_color(h);
@@ -262,19 +257,17 @@ class rb_tree
 			return h;
 		}
 
-		Node* find_min(Node* h)
+		key_type find_min(Node* h)
 		{
 			if (!h)
 				return NULL;
 			while (h->left)
 				h = h->left;
-			return h;
+			return h->pr.first;
 		}
 
 		Node*  delete_min(Node* h)
 		{
-			if (!h->left)
-				return (NULL);
 			if (!h->left)
 			{
 				allocator.destroy(h);
@@ -289,46 +282,33 @@ class rb_tree
 
 		Node* remove_node(Node* h, key_type key)
 		{
-			if (!h)
-				return NULL;
 			if (key < h->pr.first)
 			{
-				if (h->left)
-				{
-					if (!is_red(h->left) && !is_red(h->left->left))
-						h = move_red_left(h);
-					h->left = remove_node(h->left, key);
-				}
+				if (!is_red(h->left) && !is_red(h->left->left))
+					h = move_red_left(h);
+				h->left = remove_node(h->left, key);
 			}
 			else
 			{
 				if (is_red(h->left))
 					h = rotate_right(h);
-
-
-				if (key == h->pr.first && !h->right)
+				if (key == h->pr.first && h->right == NULL)
 				{
-					allocator.destroy(h);
-					allocator.deallocate(h, 1);
 					return NULL;
 				}
-				if (h->right)
+				if (!is_red(h->right) && !is_red(h->right->left))
+					h = move_red_right(h);
+				if (key == h->pr.first)
 				{
-					if (!is_red(h->right) && !is_red(h->right->left))
-						h = move_red_right(h);
-
-					if (key == h->pr.first)
-					{
-						Node* tmp = find_min(h->right);
-						h->pr.first = tmp->pr.first;
-						h->pr.second = tmp->pr.second;
-						h->right = delete_min(h->right);
-					}
-					else
-						h->right = remove_node(h->right, key);
+					// do performance fix here if needed.
+					h->pr.second = *get(h->right, find_min(h->right));
+					h->pr.first = find_min(h->right);
+					h->right = delete_min(h->right);
 				}
+				else
+					h->right = remove_node(h->right, key);
 			}
-			return fix(h);
+			return (fix(h));
 		}
 
 		void destroy_tree(Node* node)
