@@ -6,13 +6,14 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 00:46:25 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/23 15:12:32 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/23 15:21:29 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /**
  * This is a left leaning red-black tree in c++ (c++98).
  * It is made to fit the needs of a std::map clone implementation.
+ * (From Robert Sedgewick paper)
 */
 
 #pragma once
@@ -202,7 +203,6 @@ class rb_tree
 
 		Node* insert_node(Node* h, key_type key, mapped_type value)
 		{
-			// Normal BST insertion.
 			if (h == NULL)
 				return make_node(key, value);
 			key_type k = h->pr.first;
@@ -212,8 +212,6 @@ class rb_tree
 				h->right = insert_node(h->right, key, value);
 			else
 				return h;
-
-			// LLRB tree part
 			if (is_red(h->right) && !is_red(h->left))
 				h = rotate_left(h);
 			if (is_red(h->left) && is_red(h->left->left))
@@ -294,6 +292,7 @@ class rb_tree
 					h = rotate_right(h);
 				if (key == h->pr.first && h->right == NULL)
 				{
+					destroy_tree(h);
 					return NULL;
 				}
 				if (!is_red(h->right) && !is_red(h->right->left))
