@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 00:46:25 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/23 15:21:29 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/23 20:30:10 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,13 +255,13 @@ class rb_tree
 			return h;
 		}
 
-		key_type find_min(Node* h)
+		Node* find_min(Node* h)
 		{
 			if (!h)
 				return NULL;
 			while (h->left)
 				h = h->left;
-			return h->pr.first;
+			return h;
 		}
 
 		Node*  delete_min(Node* h)
@@ -299,9 +299,8 @@ class rb_tree
 					h = move_red_right(h);
 				if (key == h->pr.first)
 				{
-					// do performance fix here if needed.
-					h->pr.second = *get(h->right, find_min(h->right));
-					h->pr.first = find_min(h->right);
+					h->pr.first = find_min(h->right)->pr.first;
+					h->pr.second = *get(h->right, h->pr.first);
 					h->right = delete_min(h->right);
 				}
 				else
