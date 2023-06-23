@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 00:46:25 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/23 20:35:19 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/23 20:56:26 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ class rb_tree
 		Node* get_root() const {return root;}
 		allocator_type get_allocator() const {return (allocator);}
 
-		mapped_type get(key_type key)
+		mapped_type& get(const key_type& key)
 		{
 			if (!root)
 				throw std::out_of_range("Empty");
@@ -89,12 +89,12 @@ class rb_tree
 			throw std::out_of_range("Not inside");
 		}
 
-		bool containes(key_type key) const
+		bool containes(const key_type& key) const
 		{
 			return (get(root, key) != NULL);
 		}
 
-		void insert(ft::pair<key_type, mapped_type> h)
+		void insert(ft::pair<const key_type, mapped_type> h)
 		{
 			root = insert_node(root, h.first, h.second);
 			root->color = BLACK;
@@ -134,7 +134,7 @@ class rb_tree
 		// }
 
 
-		mapped_type* get(Node* h, mapped_type key) const
+		mapped_type* get(Node* h, key_type key) const
 		{
 			while (h)
 			{
