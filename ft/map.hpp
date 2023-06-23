@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 15:34:56 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/23 21:51:59 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/24 02:15:25 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,18 +70,17 @@ namespace ft
 			*this = x;
 		}
 
-		map& operator= (const map& x)
+		map& operator=(const map& x)
 		{
 			if (this == &x)
 				return *this;
 			if (!empty())
-			{
 				clear();
-			}
-			tree = x.tree;
+			this->tree = x.tree;
 			this->allocator = x.allocator;
 			this->compare = x.compare;
-			this._size = x.size();
+			this->_size = x.size();
+			return (*this);
 		}
 
 		~map() {}
@@ -97,6 +96,7 @@ namespace ft
 				return (at(key));
 			} catch (std::out_of_range& e) {
 				tree.insert(ft::make_pair(key, T()));
+				++_size;
 			}
 			return at(key);
 		}
@@ -127,6 +127,29 @@ namespace ft
 		{
 			~tree();
 			_size = 0;
+		}
+
+		void swap(map& other)
+		{
+			ft::rb_tree<key_type, mapped_type> tree_tmp;
+			size_type _size_tmp;
+			allocator_type allocator_tmp;
+			key_compare compare_tmp;
+
+			tree_tmp = tree;
+			_size_tmp = _size;
+			allocator_tmp = allocator;
+			compare_tmp = compare;
+
+			tree = other.tree;
+			_size = other._size;
+			allocator = other.allocator;
+			compare = other.compare;
+
+			other.tree = tree_tmp;
+			other._size = _size_tmp;
+			other.allocator = allocator_tmp;
+			other.compare = compare_tmp;
 		}
 
 };
