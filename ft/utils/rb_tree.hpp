@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rb_tree.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
+/*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 00:46:25 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/22 14:27:30 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/23 14:24:51 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,24 @@ class rb_tree
 			allocator = src.get_allocator();
 
 		}
+		
 		~rb_tree() {destroy_tree(root);}
 
 		Node* get_root() const {return root;}
 		allocator_type get_allocator() const {return (allocator);}
+
+		mapped_type get(key_type key)
+		{
+			mapped_type* value = get(root, key);
+			if (value)
+				return value;
+			throw std::out_of_range("Not inside");
+		}
+
+		bool containes(key_type key) const
+		{
+			return (get(root, key) != NULL);
+		}
 
 		void insert(ft::pair<key_type, mapped_type> h)
 		{
@@ -110,21 +124,31 @@ class rb_tree
 			inorderTraversal(node->right);
 		}
 
-		bool containes(Node* h, key_type key)
-		{
-			if (!h)
-				return false;
-			if (key == h->pr.first)
-				return true;
-			if (containes(h->left, key))
-				return true;
-			return containes(h->right, key);
-		}
-
 	private:
 
 		Node* root;
 		allocator_type allocator;
+
+		bool is_less(key_type k1, key_type k2)
+		{
+			Compare cmp = Compare();
+			return cmp(k1, k2);
+		}
+
+
+		mapped_type* get(Node* h, mapped_type key) const
+		{
+			while (h)
+			{
+				if (h->pr.first == key)
+					return (&(h->pr.second));
+				if (is_less(key, h->pr.first))
+					h = h->left;
+				else
+					h = h->right;
+			}
+			return (NULL);
+		}
 
 		void flip_color(Node* node)
 		{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
+/*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:09 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/20 14:24:50 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/23 14:25:17 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int main ()
   tree.insert(ft::make_pair("550", "0"));
   tree.insert(ft::make_pair("4", "110"));
 
-  std::cout << "Inorder traversal of the LLRB tree: ";
+  std::cout << "Inorder traversal of the LLRB tree: \n";
   tree.printInorder();
   std::cout << std::endl;
 
