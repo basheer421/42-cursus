@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 23:42:00 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/25 00:48:47 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/25 01:14:44 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,13 @@ class BitcoinExchange
 	private:
 		struct Date
 		{
+			std::string raw;
 			std::string year;
 			int month;
 			int day;
 		};
 
-		std::map<Date, float> db;
+		std::map<std::string, float> db;
 		void storeInput(std::string fileName); // Stores inside the db.
 	
 	public:
