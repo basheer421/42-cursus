@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 23:42:00 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/25 01:14:44 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/25 02:19:33 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <sstream>
 #include <map>
 #include <list>
+#include <exception>
 
 std::list<std::string> split(std::string str, char sep);
 
@@ -26,14 +27,28 @@ class BitcoinExchange
 	private:
 		struct Date
 		{
-			std::string raw;
 			std::string year;
 			int month;
 			int day;
 		};
 
-		std::map<std::string, float> db;
-		void storeInput(std::string fileName); // Stores inside the db.
+		std::map<std::string, double> db;
+		std::map<std::string, std::string> input;
+		std::map<std::string, bool> isBadInput; // could use set instead
+
+		void storeDB(std::string fileName,
+			std::map<std::string, double>& db,
+			char dateSep);
+		
+		void storeInput(std::string fileName,
+			std::map<std::string, std::string>& db,
+			char dateSep);
+
+		class BadFile : public std::exception
+		{
+			public:
+				const char *what() const throw();
+		};
 	
 	public:
 		BitcoinExchange();
