@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BitcoinExchange.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 23:42:00 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/25 02:19:33 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/25 17:21:39 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <map>
 #include <list>
 #include <exception>
+#include <limits>
 
 std::list<std::string> split(std::string str, char sep);
 
@@ -33,29 +34,28 @@ class BitcoinExchange
 		};
 
 		std::map<std::string, double> db;
-		std::map<std::string, std::string> input;
-		std::map<std::string, bool> isBadInput; // could use set instead
 
 		void storeDB(std::string fileName,
 			std::map<std::string, double>& db,
 			char dateSep);
 		
-		void storeInput(std::string fileName,
-			std::map<std::string, std::string>& db,
-			char dateSep);
+		bool isBadDate(std::list<std::string> dateList);
+		double findNearsetDate(std::string date);
+		
 
-		class BadFile : public std::exception
-		{
+		class BadFile : public std::exception {
 			public:
 				const char *what() const throw();
 		};
 	
 	public:
 		BitcoinExchange();
-		BitcoinExchange(std::string fileName);
 		BitcoinExchange(const BitcoinExchange& src);
 		BitcoinExchange& operator=(const BitcoinExchange& src);
 		~BitcoinExchange();
+
+		void printDB();
+		void calculate(std::string fileName, char dateSep);
 
 		
 };

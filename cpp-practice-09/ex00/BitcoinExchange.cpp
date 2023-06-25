@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BitcoinExchange.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 23:42:36 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/25 02:27:50 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/25 18:38:48 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,25 +28,42 @@ std::list<std::string> split(std::string str, char sep)
 	std::string buff;
 
 	while (std::getline(ss, buff, sep))
-	{
-		// not needed for easy error detection
-		// if (buff.length() > 0)
 			list.push_back(buff);
-	}
 	return list;
 }
 
-BitcoinExchange::BitcoinExchange() {}
-
-BitcoinExchange::BitcoinExchange(std::string fileName)
+static bool isInt(const std::string& s)
 {
-	try
+	for (size_t i = 0; i < s.length(); i++)
 	{
-		storeDB("data.csv", this->db, ',');
-		storeInput(fileName, this->input, '|');
-	} catch (std::exception& e) {
-		std::cerr << "Error: " << e.what() << "\n";
+		if (!std::isdigit(s[i]))
+			return (false);
 	}
+	return (true);
+}
+
+static bool isFloat(const std::string& s)
+{
+	bool pointReached = false;
+
+	for (size_t i = 0; i < s.length(); i++)
+	{
+		if (!std::isdigit(s[i]))
+		{
+			if (!pointReached && s[i] == '.' && i+1 != s.length())
+				pointReached = true;
+			else if (!pointReached && s[i] == '.' && i+1 == s.length())
+				return false;
+			else if (pointReached || s[i] != '.')
+				return (false);
+		}
+	}
+	return (true);
+}
+
+BitcoinExchange::BitcoinExchange()
+{
+	storeDB("data.csv", this->db, ',');	
 }
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange& src)
@@ -87,13 +104,14 @@ void BitcoinExchange::storeDB(std::string fileName,
 		std::size_t sep = buff.find(dateSep);
 		std::string dateString = buff.substr(0, sep);
 		std::string valueString = buff.substr(sep + 1);
-		std::list<std::string> dateList = split(dateString, '-'); 
+		if ((dateString.length() == 0) || (valueString.length() == 0) || !isFloat(valueString))
+			throw BadFile();
+		std::list<std::string> dateList = split(dateString, '-');
 		db[dateString] = _stod(valueString);
 	}
 }
 
-void BitcoinExchange::storeInput(std::string fileName,
-	std::map<std::string, std::string>& db,
+void BitcoinExchange::calculate(std::string fileName,
 	char dateSep)
 {
 	bool isFirst = true;
@@ -117,23 +135,61 @@ void BitcoinExchange::storeInput(std::string fileName,
 
 		if (sep == std::string::npos)
 		{
-			db[buff] =  "bad input => " + buff;
+			std::cout <<  "Error: bad input => " + buff << "\n";
 			continue ;
 		}
-		std::string dateString = buff.substr(0, sep);
-		std::string valueString = buff.substr(sep + 1);
+		std::string dateString = buff.substr(0, sep - 1);
+		std::string valueString = buff.substr(sep+2);
 		std::list<std::string> dateList = split(dateString, '-');
-		double val = _stod(valueString);
-		if (val < 0)
-			db[buff] =  "not a positive number.";
-		else if (val > 2147483647)
-			db[buff] =  "too large a number.";
+		double val = ( _stod(valueString) );
+		if (isBadDate(dateList))
+			std::cout << "Error: bad input => " << dateString << "\n";
+		else if ((val < 0) || !isInt(valueString))
+			std::cout <<  "Error: not a positive number.\n";
+		else if (val > 1000)
+			std::cout << "Error: too large a number.\n";
 		else
-			db[dateString] = (valueString);
+		{
+			std::cout << dateString << " => " << valueString << " = " <<
+				val * findNearsetDate(dateString) << "\n";
+		}
 	}
+}
+
+bool BitcoinExchange::isBadDate(std::list<std::string> dateList)
+{
+	int type = 0; // year(0) - month(1) - day(2)
+	for (std::list<std::string>::iterator it = dateList.begin(); it != dateList.end(); it++)
+	{
+
+		if (!isInt(*it))
+			return true;
+		std::stringstream ss(*it);
+		int i;
+
+		ss >> i;
+		if ((i <= 0) || (i > std::numeric_limits<int>::max()))
+			return true;
+		if (((type == 1) && (i > 12)) || ((type == 2) && (i > 31)))
+			return true;
+		++type;
+	}
+	return false;
+}
+
+double BitcoinExchange::findNearsetDate(std::string date)
+{
+	if (db.count(date) == 1)
+		return (db.at(date));
+	db[date] = 0;
+	std::map<std::string, double>::iterator it =  db.find(date);
+	--it;
+	double val = ((*it).second);
+	db.erase(++it);
+	return val;
 }
 
 const char *BitcoinExchange::BadFile::what() const throw()
 {
-	throw ("could not open file.");
+	return ("could not open file.");
 }
