@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 23:42:36 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/25 18:38:48 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/25 19:05:28 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ std::list<std::string> split(std::string str, char sep)
 	std::string buff;
 
 	while (std::getline(ss, buff, sep))
-			list.push_back(buff);
+		list.push_back(buff);
 	return list;
 }
 
@@ -183,7 +183,8 @@ double BitcoinExchange::findNearsetDate(std::string date)
 		return (db.at(date));
 	db[date] = 0;
 	std::map<std::string, double>::iterator it =  db.find(date);
-	--it;
+	if (it != db.begin())
+		--it;
 	double val = ((*it).second);
 	db.erase(++it);
 	return val;
