@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 22:45:12 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/26 15:01:03 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/26 15:28:32 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 #include <vector>
 #include <deque>
 #include <iostream>
-#include <fstream>
 #include <string>
 #include <sstream>
-#include <exception>
 #include <limits>
 #include <ctime>
 #include <iomanip>
@@ -34,42 +32,53 @@ void insertion_sort(cont& seq, std::size_t s, std::size_t end)
 }
 
 template <typename cont>
-void merge(cont& seq, std::size_t s, std::size_t e1, std::size_t e2)
+void merge(cont& seq, std::size_t const s, std::size_t const m, std::size_t const e)
 {
-    std::size_t i = s, j = e1 + 1;
-    cont temp;
+    std::size_t n1 = m - s + 1;
+    std::size_t n2 = e - m;
 
-    while ((i <= e1) && (j <= e2))
+    cont L(n1);
+    cont R(n2);
+
+    for (std::size_t i = 0; i < n1; i++)
+        L[i] = seq[s + i];
+    for (std::size_t i = 0; i < n2; i++)
+        R[i] = seq[m + i + 1];
+
+    std::size_t i = 0, j = 0;
+    std::size_t k = s;
+    while (i < n1 && j < n2)
     {
-        if (seq[i] > seq[j])
-            temp.push_back(seq[j++]);
+        if (L[i] <= R[j])
+            seq[k] = L[i++];
         else
-            temp.push_back(seq[i++]);
+            seq[k] = R[j++];
+        k++;
     }
-    while (i <= e1)
-        temp.push_back(seq[i++]);
-	while (j <= e2)
-		temp.push_back(seq[j++]);
-	
-	for (std::size_t x = temp.size() - 1; x >= 0; x--)
-	{
-		temp[x + s] = temp[x];
-	}
+
+    // Remaining
+    while (i < n1)
+        seq[k++] = L[i++];
+    while (j < n2)
+        seq[k++] = R[j++];
 }
 
 
 template <typename cont>
 void sort(cont& seq, std::size_t s, std::size_t e)
 {
-	if (e - s > K_size)
-	{
-		std::size_t mid = (e + s) / 2;
-		sort(seq, s, mid);
-		sort(seq, mid + 1, e);
-		merge(seq, s, mid, e);
-	}
-	else
-		insertion_sort(seq, s, e);
+    if (s < e)
+    {
+        if (e - s + 1 <= K_size)
+            insertion_sort(seq, 0, seq.size());
+        else
+        {
+            std::size_t mid = s + (e - s) / 2;
+            sort(seq, s, mid);
+            sort(seq, mid + 1, e);
+            merge(seq, s, mid, e);
+        }
+    }
 
 }
 

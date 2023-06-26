@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 23:00:50 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/26 01:47:39 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/26 15:20:54 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,12 @@ int main(int argc, char **argv)
 	std::cout << "Time to process a range of " << (argc - 1)
 		<< " elements with std::vector : "
 		<< std::fixed << std::setprecision(5)
-		<< (static_cast<double>(ve - vs) / CLOCKS_PER_SEC) * 1000000.0
+		<< ((static_cast<double>(ve - vs)) / static_cast<double>(CLOCKS_PER_SEC)) * 1000000.0
 		<< " us\n";
 	std::cout << "Time to process a range of " << (argc - 1)
 		<< " elements with std::deque : "
 		<< std::fixed << std::setprecision(5)
-		<< (static_cast<double>(dqe - dqs) / CLOCKS_PER_SEC) * 1000000.0
+		<< ((static_cast<double>(dqe - dqs)) / static_cast<double>(CLOCKS_PER_SEC)) * 1000000.0
 		<< " us\n";
 	return (0);
 }
