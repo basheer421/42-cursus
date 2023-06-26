@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bammar <bammar@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 22:45:12 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/26 01:52:47 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/26 15:01:03 by bammar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,14 @@
 #include <ctime>
 #include <iomanip>
 
-# define K_size 4
+# define K_size 5
 
 template <typename cont>
 void insertion_sort(cont& seq, std::size_t s, std::size_t end)
 {
-	int n = end;
-    for (int i = s; i < n; i++) {
-        int key = seq[i];
-        int j = i - 1;
-        while (j >= 0 && seq[j] > key) {
-            seq[j + 1] = seq[j];
-            j--;
-        }
-        seq[j + 1] = key;
-	}
+	for (std::size_t i = s + 1; i < end; i++)
+        for (std::size_t y = i; y > 0 && seq[y] < seq[y-1]; y--)
+            std::swap(seq[y-1], seq[y]);
 }
 
 template <typename cont>
