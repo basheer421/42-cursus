@@ -6,7 +6,7 @@
 #    By: bammar <bammar@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/03 23:22:01 by bammar            #+#    #+#              #
-#    Updated: 2023/06/26 01:25:05 by bammar           ###   ########.fr        #
+#    Updated: 2023/06/27 06:32:32 by basheer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ FILES	=	main.cpp PmergeMe.cpp
 
 CXX		=	c++
 
-CXXFLAGS=	-Wall -Wextra -Werror -std=c++98 -g -fsanitize=address
+CXXFLAGS=	-Wall -Wextra -Werror -std=c++98
 
 OBJS	=	$(FILES:.cpp=.o)
 
