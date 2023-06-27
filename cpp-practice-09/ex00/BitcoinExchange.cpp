@@ -6,7 +6,7 @@
 /*   By: bammar <bammar@student.42abudhabi.ae>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 23:42:36 by bammar            #+#    #+#             */
-/*   Updated: 2023/06/25 19:05:28 by bammar           ###   ########.fr       */
+/*   Updated: 2023/06/27 06:33:22 by basheer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ void BitcoinExchange::calculate(std::string fileName,
 		double val = ( _stod(valueString) );
 		if (isBadDate(dateList))
 			std::cout << "Error: bad input => " << dateString << "\n";
-		else if ((val < 0) || !isInt(valueString))
+		else if ((val < 0) || !isFloat(valueString))
 			std::cout <<  "Error: not a positive number.\n";
 		else if (val > 1000)
 			std::cout << "Error: too large a number.\n";
