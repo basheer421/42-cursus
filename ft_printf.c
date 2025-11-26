@@ -68,23 +68,23 @@ static int	ft_putunbr_fd(unsigned int n, int fd)
 	return (count);
 }
 
-static int	print_case(const char *format, va_list ap, int i)
+static int	print_case(const char c, va_list ap)
 {
-	if (format[i + 1] == '%')
+	if (c == '%')
 		return (ft_putchar_fd('%', 1));
-	else if (format[i + 1] == 's')
+	else if (c == 's')
 		return (ft_putstr_fd((char *)va_arg(ap, char *), 1));
-	else if (format[i + 1] == 'c')
+	else if (c == 'c')
 		return (ft_putchar_fd(((char)va_arg(ap, int)), 1));
-	else if (format[i + 1] == 'd' || format[i + 1] == 'i')
+	else if (c == 'd' || c == 'i')
 		return (ft_putnbr_fd((int)va_arg(ap, int), 1));
-	else if (format[i + 1] == 'u')
+	else if (c == 'u')
 		return (ft_putunbr_fd(va_arg(ap, int), 1));
-	else if (format[i + 1] == 'p')
+	else if (c == 'p')
 		return (print_pointer(va_arg(ap, unsigned long long)));
-	else if (format[i + 1] == 'x')
+	else if (c == 'x')
 		return (print_hexa(va_arg(ap, unsigned int), 1));
-	else if (format[i + 1] == 'X')
+	else if (c == 'X')
 		return (print_hexa(va_arg(ap, unsigned int), 0));
 	return (0);
 }
@@ -101,10 +101,10 @@ int	ft_printf(const char *format, ...)
 	while (format[i] != 0)
 	{
 		if (format[i] == '%')
-			counter += print_case(format, ap, i);
+			counter += print_case(format[i + 1], ap);
 		else
 			counter += ft_putchar_fd(format[i], 1);
-		if (format[i] == '%')
+		if (format[i] == '%' && format[i + 1] != 0)
 			i += 2;
 		else
 			i++;
