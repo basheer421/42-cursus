@@ -1,0 +1,53 @@
+t_ht *ht_new(size_t size)
+Test case 1: Test with a size of 0.
+Test case 2: Test with a size of 1.
+Test case 3: Test with a size larger than 1.
+
+unsigned int ht_hash(t_ht *table, const char *key)
+Test case 1: Test with an empty table and a key of length 0.
+Test case 2: Test with an empty table and a key of length 1.
+Test case 3: Test with an empty table and a key of length larger than 1.
+Test case 4: Test with a non-empty table and a key that exists in the table.
+Test case 5: Test with a non-empty table and a key that does not exist in the table.
+
+int ht_set(t_ht *table, char *key, void *value)
+Test case 1: Test with an empty table and a key of length 0.
+Test case 2: Test with an empty table and a key of length 1.
+Test case 3: Test with an empty table and a key of length larger than 1.
+Test case 4: Test with a non-empty table and a key that does not exist in the table.
+Test case 5: Test with a non-empty table and a key that already exists in the table.
+
+void *ht_get(t_ht *table, const char *key)
+Test case 1: Test with an empty table and a key of length 0.
+Test case 2: Test with an empty table and a key of length 1.
+Test case 3: Test with an empty table and a key of length larger than 1.
+Test case 4: Test with a non-empty table and a key that exists in the table.
+Test case 5: Test with a non-empty table and a key that does not exist in the table.
+
+int ht_contains(t_ht *table, const char *key)
+Test case 1: Test with an empty table and a key of length 0.
+Test case 2: Test with an empty table and a key of length 1.
+Test case 3: Test with an empty table and a key of length larger than 1.
+Test case 4: Test with a non-empty table and a key that exists in the table.
+Test case 5: Test with a non-empty table and a key that does not exist in the table.
+
+int ht_isempty(t_ht *table)
+Test case 1: Test with an empty table.
+Test case 2: Test with a non-empty table.
+
+void ht_remove(t_ht *table, const char *key)
+Test case 1: Test with an empty table and a key of length 0.
+Test case 2: Test with an empty table and a key of length 1.
+Test case 3: Test with an empty table and a key of length larger than 1.
+Test case 4: Test with a non-empty table and a key that exists in the table.
+Test case 5: Test with a non-empty table and a key that does not exist in the table.
+
+void ht_replace(t_ht *table, const char *key, void *new_value)
+Test case 1: Test with an empty table and a key of length 0.
+Test case 2: Test with an empty table and a key of length 1.
+Test case 3: Test with an empty table and a key of length larger than 1.
+Test case 4: Test with a non-empty table and a key that exists in the table.
+Test case 5: Test with a non-empty table and a key that does not exist in the table.
+void ht_clear(t_ht *table)
+Test case 1: Test with an empty table.
+Test case 2: Test with a non-empty table.
